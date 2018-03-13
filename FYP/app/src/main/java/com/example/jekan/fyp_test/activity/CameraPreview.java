@@ -1,4 +1,4 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.activity;
 
 import android.content.Context;
 import android.hardware.Camera;

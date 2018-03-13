@@ -1,6 +1,6 @@
 package com.example.jekan.fyp_test;
 
-import android.graphics.Point;
+import com.example.jekan.fyp_test.view.DotPoint;
 
 import java.util.ArrayList;
 

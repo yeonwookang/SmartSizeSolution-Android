@@ -1,4 +1,4 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.view;
 
 /**
  * Created by jekan on 2018-02-21.

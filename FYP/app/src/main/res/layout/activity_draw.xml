@@ -1,46 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:Dot="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:layout_height="60dp"
+    <Button
+        android:id="@+id/btn_save_draw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="저장"/>
+
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="horizontal">
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="DRAW"
-            android:layout_weight="3"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="30dp" />
-
-        <Button
-            android:id="@+id/exitBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAlignment="gravity"
-            android:layout_weight="0.1"
-            android:background="@color/colorPrimaryDark"
-            android:text="close"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp" />
-
-    </LinearLayout>
+    <com.example.jekan.fyp_test.view.Dot
+        android:id="@+id/dot"
+        android:tag="trueDot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:background="#cccccc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center_vertical|center_horizontal">
 
@@ -58,27 +47,12 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"/>
+            android:text="설정"/>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.example.jekan.fyp_test.Dot
-            android:id="@+id/dot"
-            android:tag="trueDot"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
 
 
 
-</LinearLayout>
+
+</RelativeLayout>

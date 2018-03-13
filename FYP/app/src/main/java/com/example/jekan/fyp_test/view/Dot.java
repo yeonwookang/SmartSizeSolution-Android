@@ -1,10 +1,9 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * Created by jekan on 2018-02-21.
  */
 
-class Dot extends View {
+public class Dot extends View {
     private int RADIUS = 10; // 기본 점 크기 10
     private float x = 100; // 기본 좌표 (0, 0)인 경우 옮기기 힘듦
     private float y = 100;

@@ -20,21 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MainActivity" />
         <activity
-            android:name=".AlbumActivity"
+            android:name=".activity.SetImageActivity"
             android:hardwareAccelerated="false" />
         <activity
-            android:name=".DrawActivity"
+            android:name=".activity.DrawActivity"
             android:hardwareAccelerated="false" />
-        <activity android:name=".CameraActivity">
+        <activity android:name=".activity.CameraActivity">
             android:screenOrientation="sensor"
             <intent-filter>
                 <action android:name="android.intent.action.APPWIDGET_CONFIGURE" />

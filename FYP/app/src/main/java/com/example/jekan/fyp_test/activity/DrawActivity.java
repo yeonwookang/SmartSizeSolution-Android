@@ -1,9 +1,7 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.activity;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.bumptech.glide.Glide;
+import com.example.jekan.fyp_test.view.Dot;
+import com.example.jekan.fyp_test.R;
+import com.example.jekan.fyp_test.RotateTransformation;
 
 /**
  * Created by jekan on 2018-02-20.
@@ -30,10 +31,11 @@ public class DrawActivity extends Activity{
         setContentView(R.layout.activity_draw);
 
         // EXIT 버튼 설정
-        Button exitBtn = (Button) findViewById(R.id.exitBtn);
+        Button exitBtn = (Button) findViewById(R.id.btn_save_draw);
         exitBtn.setOnClickListener(new View.OnClickListener() { //클릭하는 경우
             @Override
             public void onClick(View view) {
+                setResult(RESULT_OK);
                 finish();
             }
         });

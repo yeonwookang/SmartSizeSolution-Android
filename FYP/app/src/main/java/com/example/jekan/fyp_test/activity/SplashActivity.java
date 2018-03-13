@@ -1,4 +1,4 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.jekan.fyp_test.R;
 import com.felipecsl.gifimageview.library.GifImageView;
 
 import org.apache.commons.io.IOUtils;

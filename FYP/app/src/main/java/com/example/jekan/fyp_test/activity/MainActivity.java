@@ -1,8 +1,7 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.jekan.fyp_test.AlbumActivity;
 import com.example.jekan.fyp_test.R;
 
 /**
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 앨범 액티비티 실행
-                Intent intent = new Intent(MainActivity.this, AlbumActivity.class); // 현재 액티비티, 전환할 액티비티
+                Intent intent = new Intent(MainActivity.this, SetImageActivity.class); // 현재 액티비티, 전환할 액티비티
                 startActivity(intent);
             }
         });
