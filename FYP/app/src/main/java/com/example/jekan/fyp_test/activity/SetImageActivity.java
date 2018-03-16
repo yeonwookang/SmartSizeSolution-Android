@@ -118,7 +118,7 @@ public class SetImageActivity extends AppCompatActivity {
         imgUserFront = (ImageView)findViewById(R.id.img_user_front);
         imgUserSide = (ImageView)findViewById(R.id.img_user_side);
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_user_image);
+       /* RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_user_image);
         RadioButton frontRadio = (RadioButton)findViewById(R.id.radio_user_front);
         RadioButton sideRadio = (RadioButton)findViewById(R.id.radio_user_side);
         radioGroup.check(R.id.radio_user_front); // 정면 기본 체크
@@ -146,7 +146,7 @@ public class SetImageActivity extends AppCompatActivity {
                         break;
                 }
             }
-        });
+        });*/
 
         Button btnClose = (Button)findViewById(R.id.btn_close_set_Image);
         btnClose.setOnClickListener(new View.OnClickListener() {

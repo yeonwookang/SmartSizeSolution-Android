@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         splashImage = (GifImageView) findViewById(R.id.img_splash_background);
         try {
-            InputStream inputStream = getAssets().open("img_splash2.gif");
+            InputStream inputStream = getAssets().open("sss_splash.gif");
             byte[] bytes = IOUtils.toByteArray(inputStream);
             splashImage.setBytes(bytes);
             splashImage.startAnimation();
@@ -41,10 +41,10 @@ public class SplashActivity extends AppCompatActivity {
                 SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 SplashActivity.this.finish();
             }
-        }, 3500);
+        }, 2500);
     }
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         super.onDestroy();
         recycleView(findViewById(R.id.activity_splash_screen));
@@ -59,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                 ((BitmapDrawable) bg).getBitmap().recycle();
                 view.setBackgroundDrawable(null);
             }
-        }
+        }*/
 
     /*
 
@@ -112,4 +112,3 @@ public class SplashActivity extends AppCompatActivity {
         }
     }*/
     }
-}
