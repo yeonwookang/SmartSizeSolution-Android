@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class Dot extends View {
-    private int RADIUS = 10; // 기본 점 크기 10
+    private int RADIUS = 5; // 기본 점 크기 5
     private float x = 100; // 기본 좌표 (0, 0)인 경우 옮기기 힘듦
     private float y = 100;
     private float initialX;
@@ -56,12 +56,12 @@ public class Dot extends View {
         backgroundPaint.setAlpha(0);
 
         myPaint = new Paint();
-        myPaint.setColor(Color.RED);
+        myPaint.setColor(Color.rgb(117, 77, 193));
         myPaint.setAntiAlias(true);
 
         // 점 위의 캡션
         captions = new Paint();
-        captions.setColor(Color.RED);
+        captions.setColor(Color.rgb(117, 77, 193));
         captions.setTextSize(30);
 
         // 처음 생성될 때 임의의 좌표를 점 최대치 개수 만큼 배열에 저장
@@ -129,14 +129,20 @@ public class Dot extends View {
         canvas.drawRect(0, 0, width, height, backgroundPaint);
 
         // 점들을 다시 그려줌
-        // 선택된 점은 노란색 표시
+        // 선택된 점은 표시
         for(int i = 0; i < MAXDOT; i++) {
             if(i == index) {
-                myPaint.setColor(Color.YELLOW); // 선택된 점에 해당하면 노란색 점
+                float selected = (float) (RADIUS / 2.5); // 선택된 점 테두리 굵기 조정
+                // 선택된 점에 해당하면 이중 점
+                myPaint.setColor(Color.rgb(117, 77, 193));
+                canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
+                myPaint.setColor(Color.WHITE);
+                canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS - selected, myPaint); // 점 그리기
             }  else {
-                myPaint.setColor(Color.RED); // 나머진 붉은색
+                myPaint.setColor(Color.rgb(117, 77, 193)); // 나머진 보라색
+                canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
             }
-            canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
+
             if(isFront)
                 canvas.drawText(frontCaptions[i], pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), captions); // 점 캡션
             else

@@ -20,7 +20,7 @@ import com.example.jekan.fyp_test.RotateTransformation;
 public class DrawActivity extends Activity{
     // 점 최대, 최소 크기
     private final int MAX_DOT_SIZE = 100;
-    private final int MIN_DOT_SIZE = 10;
+    private final int MIN_DOT_SIZE = 5;
 
     Dot dot;
     Button okBtn; //?
