@@ -11,8 +11,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import com.example.jekan.fyp_test.AlbumActivity;
 import com.example.jekan.fyp_test.R;
 
 /**

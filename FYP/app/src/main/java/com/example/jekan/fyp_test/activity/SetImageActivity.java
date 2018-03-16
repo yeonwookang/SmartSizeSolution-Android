@@ -1,18 +1,22 @@
 package com.example.jekan.fyp_test.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jekan.fyp_test.InputDialog;
 import com.example.jekan.fyp_test.R;
 import com.example.jekan.fyp_test.RotateTransformation;
 
@@ -23,18 +27,19 @@ import com.example.jekan.fyp_test.RotateTransformation;
 public class SetImageActivity extends AppCompatActivity {
 
     private boolean isFront = true;
+
     private Button btnRotateImage, btnDrawDot, btnSavePicture;
     private ImageView imgUserFront, imgUserSide = null;
     private String photoPath = null;
     private String[] photoPathArr = new String[2];
+    private int rotate = 0;
+    private int[] rotateArr= new int[2];
 
-    // 액티비티 플래그
     static final int REQUEST_PICK_FROM_ALBUM = 0;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_SEND_DATA=3;
     static final int REQUEST_DRAW_DOT=4;
-    private int rotate = 0;
-    private int[] rotateArr= new int[2];
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +49,25 @@ public class SetImageActivity extends AppCompatActivity {
     }
 
     public void initState(){
+
+        Button btnFront = (Button)findViewById(R.id.btn_user_front);
+        btnFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isFront=true;
+                imgUserFront.setVisibility(View.VISIBLE);
+                imgUserSide.setVisibility(View.INVISIBLE);
+            }
+        });
+        Button btnSide = (Button)findViewById(R.id.btn_user_side);
+        btnSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isFront=false;
+                imgUserFront.setVisibility(View.INVISIBLE);
+                imgUserSide.setVisibility(View.VISIBLE);
+            }
+        });
 
         //이미지 가져오기
         Button btnPickImage = (Button)findViewById(R.id.btn_gallery_set_Image);
@@ -78,7 +102,6 @@ public class SetImageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(SetImageActivity.this, DrawActivity.class); // 현재 액티비티, 전환할 액티비티
-                //회전각도?도 전달해볼까
                 if(isFront){
                     photoPath = photoPathArr[0];
                     rotate = rotateArr[0];
@@ -110,44 +133,27 @@ public class SetImageActivity extends AppCompatActivity {
         btnSavePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
-                startActivityForResult(intent, REQUEST_SEND_DATA);
+                final InputDialog inputDialog = new InputDialog(SetImageActivity.this);
+                inputDialog.show();
+
+                inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        String userHeight = inputDialog.getEditUerHeight().toString();
+                        Toast.makeText(getApplicationContext(), "당신의 키: "+userHeight, Toast.LENGTH_SHORT).show();
+                       // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
+                        // startActivityForResult(intent, REQUEST_SEND_DATA);
+                    }
+                });
+
+//                AlertDialog.Builder userHeight = new AlertDialog.Builder(getApplication());
+//                userHeight.setMessage("당신의 키를 입력해주세요! ")
+
             }
         });
 
         imgUserFront = (ImageView)findViewById(R.id.img_user_front);
         imgUserSide = (ImageView)findViewById(R.id.img_user_side);
-
-       /* RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_user_image);
-        RadioButton frontRadio = (RadioButton)findViewById(R.id.radio_user_front);
-        RadioButton sideRadio = (RadioButton)findViewById(R.id.radio_user_side);
-        radioGroup.check(R.id.radio_user_front); // 정면 기본 체크
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i) {
-                    case R.id.radio_user_front:
-                        imgUserFront.setVisibility(View.VISIBLE);
-                        imgUserSide.setVisibility(View.INVISIBLE);
-                        isFront = true;
-                        if(photoPathArr[0] !=null){
-                            btnRotateImage.setVisibility(View.VISIBLE);
-                            btnDrawDot.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    case R.id.radio_user_side:
-                        imgUserFront.setVisibility(View.INVISIBLE);
-                        imgUserSide.setVisibility(View.VISIBLE);
-                        isFront = false;
-                        if(photoPathArr[1] !=null){
-                            btnRotateImage.setVisibility(View.VISIBLE);
-                            btnDrawDot.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                }
-            }
-        });*/
-
         Button btnClose = (Button)findViewById(R.id.btn_close_set_Image);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +180,7 @@ public class SetImageActivity extends AppCompatActivity {
 
             case REQUEST_DRAW_DOT: //드로우에서 데이터값을 넘겨받으면 수정해야함!
                 if(resultCode == RESULT_OK)
-                    btnSavePicture.setVisibility(View.VISIBLE);
+                    btnSavePicture.setVisibility(View.VISIBLE); //if문 추가해야함
                   break;
         }
     }
@@ -197,12 +203,15 @@ public class SetImageActivity extends AppCompatActivity {
             if(isFront){
                 photoPathArr[0] = photoPath;
                 Glide.with(this).load(photoPathArr[0]).into(imgUserFront);
+                btnRotateImage.setVisibility(View.VISIBLE);
+                btnDrawDot.setVisibility(View.VISIBLE);
             }else{
                 photoPathArr[1] = photoPath;
                 Glide.with(this).load(photoPathArr[1]).into(imgUserSide);
+                btnRotateImage.setVisibility(View.VISIBLE);
+                btnDrawDot.setVisibility(View.VISIBLE);
             }
-            btnRotateImage.setVisibility(View.VISIBLE);
-            btnDrawDot.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -216,10 +225,4 @@ public class SetImageActivity extends AppCompatActivity {
         }
     }
 
-    public boolean IsTwoImageComplete(){
-        if(photoPathArr[0].length()>0 && photoPathArr[1].length()>0)
-            return true;
-        else
-            return false;
-    }
 }

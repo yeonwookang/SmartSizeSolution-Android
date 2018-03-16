@@ -22,7 +22,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/aaa"
+        android:id="@+id/view_user_state"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_alignParentTop="true"
@@ -38,11 +38,13 @@
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_marginRight="60dp"
+            android:id="@+id/btn_user_front"
             android:background="@drawable/btn_front"/>
 
         <Button
             android:layout_width="30dp"
             android:layout_height="40dp"
+            android:id="@+id/btn_user_side"
             android:background="@drawable/btn_side"/>
         </LinearLayout>
 
@@ -131,7 +133,7 @@
             android:layout_width="75dp"
             android:layout_height="30dp"
             android:id="@+id/btn_save_set_Image"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
@@ -147,7 +149,7 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:id="@+id/btn_rotate_set_Image"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
@@ -163,7 +165,7 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:id="@+id/btn_draw_set_Image"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
     </LinearLayout>
 
     </LinearLayout>
