@@ -135,16 +135,18 @@ public class SetImageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final InputDialog inputDialog = new InputDialog(SetImageActivity.this);
                 inputDialog.show();
-
                 inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        String userHeight = inputDialog.getEditUerHeight().toString();
-                        Toast.makeText(getApplicationContext(), "당신의 키: "+userHeight, Toast.LENGTH_SHORT).show();
+//                        String userHeight = inputDialog.getEditUerHeight().toString();
+//                        if(userHeight!=null){
+//                            Toast.makeText(getApplicationContext(), "당신의 키: "+userHeight, Toast.LENGTH_SHORT).show();
+//                        }
                        // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
                         // startActivityForResult(intent, REQUEST_SEND_DATA);
                     }
                 });
+                inputDialog.setCancelable(false);
 
 //                AlertDialog.Builder userHeight = new AlertDialog.Builder(getApplication());
 //                userHeight.setMessage("당신의 키를 입력해주세요! ")

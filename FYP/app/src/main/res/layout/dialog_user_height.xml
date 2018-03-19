@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#ffffff"
@@ -8,17 +9,20 @@
 
 
     <LinearLayout
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
     <EditText
         android:id="@+id/input_user_height"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:hint="당신의 키"/>
+        android:hint="당신의 키"
+        android:gravity="center"/>
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="cm"
@@ -32,12 +36,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:layout_margin="10dp"
             android:id="@+id/btn_submit_user_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="확인"/>
 
     <Button
+        android:layout_margin="10dp"
         android:id="@+id/btn_cancel_user_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

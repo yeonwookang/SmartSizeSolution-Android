@@ -20,7 +20,6 @@ import com.example.jekan.fyp_test.activity.SetImageActivity;
 public class InputDialog extends Dialog {
 
     EditText editUerHeight;
-    Button btnSubmit;
     String height;
 
     public InputDialog(Context context) {
@@ -35,11 +34,19 @@ public class InputDialog extends Dialog {
         setContentView(R.layout.dialog_user_height);
         editUerHeight = (EditText)findViewById(R.id.input_user_height);
 
-        btnSubmit = (Button)findViewById(R.id.btn_submit_user_height);
+        Button btnSubmit = (Button)findViewById(R.id.btn_submit_user_height);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 height = editUerHeight.getText().toString();
+                dismiss();
+            }
+        });
+
+        Button btnCancel = (Button)findViewById(R.id.btn_cancel_user_height);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });
