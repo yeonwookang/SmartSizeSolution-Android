@@ -42,5 +42,5 @@
         android:layout_height="wrap_content"
         android:text="확인"/>
     </LinearLayout>
-    
+
 </LinearLayout>
