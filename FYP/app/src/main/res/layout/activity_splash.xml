@@ -9,16 +9,16 @@
     android:background="#ffffff"
     android:id="@+id/activity_splash_screen">
 
-    <!--<ImageView
+    <ImageView
         android:id="@+id/img_splash_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ImageView>-->
-    <com.felipecsl.gifimageview.library.GifImageView
+    </ImageView>
+ <!--   <com.felipecsl.gifimageview.library.GifImageView
         android:id="@+id/img_splash_background"
         android:scaleType="fitCenter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
 </RelativeLayout>
