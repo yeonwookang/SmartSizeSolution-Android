@@ -34,21 +34,6 @@
             android:visibility="gone"
             android:layout_weight="1">
 
-            <LinearLayout
-                android:background="@color/colorPrimaryDark"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="30dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:text="Sliding Menu"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

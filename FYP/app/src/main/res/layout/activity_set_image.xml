@@ -7,24 +7,34 @@
 
 
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/img_user_front"
-        android:background="#D4F4FA"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_user_state"
+        android:layout_above="@id/layout_menu">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/img_user_side"
-        android:background="#FFD9FA"
-        android:visibility="gone"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/img_user_front"
+            android:background="#D4F4FA"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/img_user_side"
+            android:background="#FFD9FA"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+
 
 
     <RelativeLayout
         android:id="@+id/view_user_state"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#6f6e6e">
 
@@ -49,27 +59,6 @@
         </LinearLayout>
 
 
-   <!-- <RadioGroup
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:id="@+id/radio_user_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radio_user_front"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="앞" />
-
-        <RadioButton
-            android:id="@+id/radio_user_side"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="옆"/>
-
-    </RadioGroup>-->
-
     <Button
         android:layout_alignParentRight="true"
         android:layout_width="28dp"
@@ -81,13 +70,18 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:background="#764DC1"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:layout_alignParentBottom="true">
+        android:id="@+id/layout_menu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -169,5 +163,7 @@
     </LinearLayout>
 
     </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

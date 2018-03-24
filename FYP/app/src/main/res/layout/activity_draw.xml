@@ -6,8 +6,10 @@
 
 
     <Button
+        android:textColor="#ffffff"
+        android:background="#764DC1"
         android:id="@+id/btn_save_draw"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
@@ -25,31 +27,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+ <!--   <LinearLayout
         android:background="#cccccc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center_vertical|center_horizontal">
+    </LinearLayout>-->
 
         <SeekBar
+            android:layout_alignParentBottom="true"
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:min="10"
             android:max="100"
             android:progress="0"
             android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/okBtn"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="설정"/>
-
-    </LinearLayout>
 
 
 
