@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,9 @@ import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
 import com.example.jekan.fyp_test.R;
 import com.example.jekan.fyp_test.RotateTransformation;
+import com.example.jekan.fyp_test.view.DotPoint;
+
+import java.util.ArrayList;
 
 /**
  * Created by jekan on 2018-03-13.
@@ -40,6 +44,7 @@ public class SetImageActivity extends AppCompatActivity {
     static final int REQUEST_SEND_DATA=3;
     static final int REQUEST_DRAW_DOT=4;
 
+    ArrayList<DotPoint> frontDots, sideDots;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,19 +143,20 @@ public class SetImageActivity extends AppCompatActivity {
                 inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-//                        String userHeight = inputDialog.getEditUerHeight().toString();
-//                        if(userHeight!=null){
-//                            Toast.makeText(getApplicationContext(), "당신의 키: "+userHeight, Toast.LENGTH_SHORT).show();
-//                        }
+
+                        Toast.makeText(getApplicationContext(), "당신의 키: "+inputDialog.getEditUerHeight(), Toast.LENGTH_SHORT).show();
+                        if(inputDialog.getEditUerHeight()!=null){
+                            Intent intent = new Intent(SetImageActivity.this, MainActivity.class);
+                            intent.putExtra("actual_height", inputDialog.getEditUerHeight().toString());
+                            intent.putExtra("fPoints", frontDots);
+                            intent.putExtra("sPoints", sideDots);
+                            startActivity(intent);
+                        }
                        // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
                         // startActivityForResult(intent, REQUEST_SEND_DATA);
                     }
                 });
                 inputDialog.setCancelable(false);
-
-//                AlertDialog.Builder userHeight = new AlertDialog.Builder(getApplication());
-//                userHeight.setMessage("당신의 키를 입력해주세요! ")
-
             }
         });
 
@@ -180,9 +186,25 @@ public class SetImageActivity extends AppCompatActivity {
                 loadUserImage(data);
                 break;
 
-            case REQUEST_DRAW_DOT: //드로우에서 데이터값을 넘겨받으면 수정해야함!
-                if(resultCode == RESULT_OK)
-                    btnSavePicture.setVisibility(View.VISIBLE); //if문 추가해야함
+            case REQUEST_DRAW_DOT:
+                if(resultCode == RESULT_OK){
+                    Boolean state = data.getExtras().getBoolean("isFront");
+
+                    if(state){
+                        Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
+                        frontDots = (ArrayList<DotPoint>) data.getSerializableExtra("dotPosition");
+                        for(int i=0; i<frontDots.size(); i++){
+                            Log.d("정면 좌표: ", frontDots.get(i).getPointX()+", "+frontDots.get(i).getPointY());
+                        }
+                    }else{
+                        sideDots = (ArrayList<DotPoint>) data.getSerializableExtra("dotPosition");
+                        for (int i=0; i<sideDots.size(); i++){
+                            Log.d("측면 좌표: ", sideDots.get(i).getPointX()+", "+sideDots.get(i).getPointY());
+                        }
+                        Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
+                    }
+                    btnSavePicture.setVisibility(View.VISIBLE);
+                }
                   break;
         }
     }

@@ -11,7 +11,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.example.jekan.fyp_test.R;
+import com.example.jekan.fyp_test.view.CalcSize;
+import com.example.jekan.fyp_test.view.DotPoint;
+
+import java.util.ArrayList;
 
 /**
  * Created by jekan on 2018-02-20.
@@ -104,7 +110,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ETC 버튼 초기화", "성공");
 
         Log.d("하단 메뉴바 초기화", "성공");
+    }
 
+    //메인에 다시가는걸 어떻게알까..??? - 고민
+    public void calcurateValue(){
+        Intent intent = getIntent();
+        ArrayList<DotPoint> fPoints = (ArrayList<DotPoint>) intent.getSerializableExtra("fPoints");
+        ArrayList<DotPoint> sPoints = (ArrayList<DotPoint>) intent.getSerializableExtra("sPoints");
+        String actual_height = intent.getExtras().getString("actual_height");
+        float user_height = (float)Integer.parseInt(actual_height);
+        CalcSize calcSize = new CalcSize(fPoints, sPoints, user_height);
+        Toast.makeText(getApplicationContext(), calcSize.clacHeightPixel()+"픽셀값이 나와야겠찌", Toast.LENGTH_SHORT).show();
     }
 
     // 자동 사이즈 측정 버튼 초기화 함수

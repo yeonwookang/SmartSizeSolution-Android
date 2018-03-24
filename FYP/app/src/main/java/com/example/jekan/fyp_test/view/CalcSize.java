@@ -1,4 +1,4 @@
-package com.example.jekan.fyp_test;
+package com.example.jekan.fyp_test.view;
 
 import com.example.jekan.fyp_test.view.DotPoint;
 

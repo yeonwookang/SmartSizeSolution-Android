@@ -8,6 +8,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.jekan.fyp_test.R;
 
 import java.util.ArrayList;
 
@@ -15,7 +19,7 @@ import java.util.ArrayList;
  * Created by jekan on 2018-02-21.
  */
 
-public class Dot extends View {
+public class Dot extends View{
     private int RADIUS = 5; // 기본 점 크기 5
     private float x = 100; // 기본 좌표 (0, 0)인 경우 옮기기 힘듦
     private float y = 100;
@@ -26,6 +30,7 @@ public class Dot extends View {
     private Paint myPaint;
     private Paint backgroundPaint;
     private Paint captions;
+    private CalcSize calcSize;
 
     // 드래그 플래그
     private boolean isDrag = false;
@@ -45,6 +50,7 @@ public class Dot extends View {
     private String[] frontCaptions = {"어깨", "겨드랑이", "가슴", "손목", "허리", "엉덩이", "사타구니", "발목"};
     private String[] sideCaptions = {"머리", "옆가슴", "등", "앞허리", "뒷허리", "앞엉덩이", "뒷엉덩이", "발바닥"};
 
+
     // 캡션 플래그
     private boolean isFront = true;
 
@@ -58,19 +64,34 @@ public class Dot extends View {
         myPaint = new Paint();
         myPaint.setColor(Color.rgb(117, 77, 193));
         myPaint.setAntiAlias(true);
+        myPaint.setTextSize(30);
 
-        // 점 위의 캡션
+
+       /* // 점 위의 캡션
         captions = new Paint();
         captions.setColor(Color.rgb(117, 77, 193));
-        captions.setTextSize(30);
+        captions.setTextSize(30);*/
+
 
         // 처음 생성될 때 임의의 좌표를 점 최대치 개수 만큼 배열에 저장
         // 점을 조금씩 띄워서 배치해두었음
         for(int i = 0; i < MAXDOT; i++) {
-            pointList.add(new DotPoint(x + (i * 100), y + (i * 100)));
+            if(isFront){
+                pointList.add(new DotPoint(x + (i * 100), y + (i * 100), frontCaptions[i])); //정면일때
+            }else{
+                pointList.add(new DotPoint(x + (i * 100), y + (i * 100), sideCaptions[i])); //측면일때
+            }
+
         }
 
+
+
     }
+
+    public boolean getIsFront(){
+        return isFront;
+    }
+
 
     // 화면이 터치 되었을 때 처리
     public boolean onTouchEvent(MotionEvent event) {
@@ -83,6 +104,13 @@ public class Dot extends View {
                 for(int i = 0; i < MAXDOT; i++) {
                     if(event.getX()>= pointList.get(i).getPointX() - RADIUS && event.getX() <= pointList.get(i).getPointX() + RADIUS) {
                         if(event.getY() >= pointList.get(i).getPointY() - RADIUS && event.getY() <= pointList.get(i).getPointY() + RADIUS) {
+
+                            if(isFront){
+                                pointList.get(i).setCaption(frontCaptions[i]);
+                            }else{
+                                pointList.get(i).setCaption(sideCaptions[i]);
+                            } //추가
+
                             isDrag = true; // 드래그 시작
                             index = i; // 선택된 점 번호
                             initialX = pointList.get(i).getPointX();
@@ -131,11 +159,20 @@ public class Dot extends View {
         // 점들을 다시 그려줌
         // 선택된 점은 표시
         for(int i = 0; i < MAXDOT; i++) {
+
+            if(isFront){
+                pointList.get(i).setCaption(frontCaptions[i]);
+            }else{
+                pointList.get(i).setCaption(sideCaptions[i]);
+            }
+            canvas.drawText(pointList.get(i).getCaption(), pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), myPaint);
+
             if(i == index) {
                 float selected = (float) (RADIUS / 2.5); // 선택된 점 테두리 굵기 조정
                 // 선택된 점에 해당하면 이중 점
                 myPaint.setColor(Color.rgb(117, 77, 193));
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
+
                 myPaint.setColor(Color.WHITE);
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS - selected, myPaint); // 점 그리기
             }  else {
@@ -143,15 +180,35 @@ public class Dot extends View {
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
             }
 
-            if(isFront)
+           /* if(isFront)
                 canvas.drawText(frontCaptions[i], pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), captions); // 점 캡션
             else
-                canvas.drawText(sideCaptions[i], pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), captions); // 점 캡션
+                canvas.drawText(sideCaptions[i], pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), captions); // 점 캡션*/
         }
 
         // 새로고침
         invalidate();
     }
+
+    public ArrayList<DotPoint> dotState(){
+
+        ArrayList<DotPoint> dotPointsFront = new ArrayList<>();
+        ArrayList<DotPoint> dotPointsSide = new ArrayList<>();
+
+        if(isFront){
+            for(int i=0; i<MAXDOT; i++){
+                dotPointsFront.add(i, new DotPoint(pointList.get(i).getPointX(), pointList.get(i).getPointY(), frontCaptions[i]));
+            }
+            return dotPointsFront;
+        }else{
+            for(int i=0; i<MAXDOT; i++){
+                dotPointsSide.add(i, new DotPoint(pointList.get(i).getPointX(), pointList.get(i).getPointY(), sideCaptions[i]));
+            }
+            return dotPointsSide;
+        }
+    }
+
+
 
     // 점 크기 지정
     public void setRadius(int radius) {
@@ -164,6 +221,7 @@ public class Dot extends View {
         this.isFront = isFront;
         invalidate();
     }
+
 
     // 점 좌표 반환
     public float getX() {
@@ -182,4 +240,5 @@ public class Dot extends View {
     public void setY(float y) {
         this.y = y;
     }
+
 }

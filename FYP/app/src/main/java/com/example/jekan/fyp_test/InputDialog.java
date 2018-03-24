@@ -24,6 +24,7 @@ public class InputDialog extends Dialog {
 
     public InputDialog(Context context) {
         super(context);
+        this.height = null;
     }
 
     @Override
@@ -39,6 +40,7 @@ public class InputDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 height = editUerHeight.getText().toString();
+                setEditUerHeight(height);
                 dismiss();
             }
         });
