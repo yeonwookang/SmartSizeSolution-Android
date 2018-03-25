@@ -44,7 +44,7 @@ public class CalcSize {
         DotPoint f_groin = fPoints.get(6);
         float width = (f_groin.getPointX() - f_shoulder.getPointX()) * 2;
         return width;*/
-     return  getPointDistance(fPoints.get(0), fPoints.get(6))*2;
+     return  getPointDistance(fPoints.get(0), fPoints.get(6))*2*ratio;
     }
 
     // 팔 길이 (거리 공식) {
@@ -53,7 +53,7 @@ public class CalcSize {
         DotPoint f_wrist = fPoints.get(3);
         float length = 0;
         return length;*/
-      return getPointDistance(fPoints.get(0), fPoints.get(3));
+      return getPointDistance(fPoints.get(0), fPoints.get(3))*ratio;
     }
 
     //가슴 너비(둘레x)

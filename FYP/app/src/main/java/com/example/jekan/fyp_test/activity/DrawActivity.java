@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.view.Dot;
@@ -27,6 +31,7 @@ public class DrawActivity extends Activity{
     private final int MAX_DOT_SIZE = 100;
     private final int MIN_DOT_SIZE = 5;
 
+    ToggleButton helpBtn;
     ArrayList<DotPoint> dotPoints = new ArrayList<>();
     Dot dot;
     boolean isFront;
@@ -34,6 +39,37 @@ public class DrawActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
+        helpBtn = (ToggleButton)findViewById(R.id.btn_user_help);
+
+        helpBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //LinearLayout helpView = (LinearLayout) findViewById(R.id.view_user_help);
+                //TextView helpText = (TextView)findViewById(R.id.txt_user_help);
+                Button btn_help = (Button)findViewById(R.id.btn_help_txt);
+                if(isChecked){
+                    btn_help.setVisibility(View.VISIBLE);
+                }
+                   // helpText.setVisibility(View.VISIBLE);
+                else{
+                    btn_help.setVisibility(View.INVISIBLE);
+                }
+                    //helpText.setVisibility(View.INVISIBLE);
+            }
+        });
+        //helpView.setVisibility(View.INVISIBLE);
+     /*   helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(helpBtn.isChecked()){
+                    Toast.makeText(getApplicationContext(), "눌림1", Toast.LENGTH_SHORT).show();
+                    helpView.setVisibility(View.VISIBLE);
+                }else{
+                    Toast.makeText(getApplicationContext(), "눌림2", Toast.LENGTH_SHORT).show();
+                    helpView.setVisibility(View.INVISIBLE);
+                }
+            }
+        });*/
 
         // EXIT 버튼 설정
         Button saveBtn = (Button) findViewById(R.id.btn_save_draw);

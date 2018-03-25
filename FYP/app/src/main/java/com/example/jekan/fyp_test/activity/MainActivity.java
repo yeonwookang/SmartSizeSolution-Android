@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // 웹뷰 설정
         webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true); // 자바스크립트 허용
-        webview.loadUrl("http://www.smartsizeservice.xyz/main.php"); // url
+        webview.loadUrl("http://www.smartsizeservice.xyz/index.php"); // url
         webview.setWebViewClient(new WebViewClient()); // 새창에서 뜨지 않도록 설정
         Log.d("웹뷰 초기화", "성공");
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                webview.loadUrl("http://www.smartsizeservice.xyz/main.php"); // 시작 페이지
+                webview.loadUrl("http://www.smartsizeservice.xyz/index.php"); // 시작 페이지
             }
         });
 

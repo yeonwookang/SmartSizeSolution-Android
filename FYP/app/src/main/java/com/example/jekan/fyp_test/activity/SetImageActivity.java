@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
 import com.example.jekan.fyp_test.R;
 import com.example.jekan.fyp_test.RotateTransformation;
+import com.example.jekan.fyp_test.view.CalcSize;
 import com.example.jekan.fyp_test.view.DotPoint;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class SetImageActivity extends AppCompatActivity {
     static final int REQUEST_DRAW_DOT=4;
 
     ArrayList<DotPoint> frontDots, sideDots;
+    CalcSize calcSize;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,11 +148,18 @@ public class SetImageActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "당신의 키: "+inputDialog.getEditUerHeight(), Toast.LENGTH_SHORT).show();
                         if(inputDialog.getEditUerHeight()!=null){
-                            Intent intent = new Intent(SetImageActivity.this, MainActivity.class);
+
+                            float user_height = (float)Integer.parseInt(inputDialog.getEditUerHeight());
+                            //치수 값이 잘 나오는지 테스트
+                            calcSize = new CalcSize(frontDots, sideDots,user_height);
+                            String total_result = "해당 픽셀값: "+calcSize.clacHeightPixel()+"\n팔 길이"+calcSize.getArmLength()+"\n어깨 너비"+calcSize.getShoulderWidth();
+                            Toast.makeText(getApplicationContext(), total_result, Toast.LENGTH_LONG).show();
+
+                           /* Intent intent = new Intent(SetImageActivity.this, MainActivity.class);A
                             intent.putExtra("actual_height", inputDialog.getEditUerHeight().toString());
                             intent.putExtra("fPoints", frontDots);
                             intent.putExtra("sPoints", sideDots);
-                            startActivity(intent);
+                            startActivity(intent);*/
                         }
                        // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
                         // startActivityForResult(intent, REQUEST_SEND_DATA);
@@ -203,7 +212,11 @@ public class SetImageActivity extends AppCompatActivity {
                         }
                         Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
                     }
-                    btnSavePicture.setVisibility(View.VISIBLE);
+                    if(frontDots!=null && sideDots!=null){ //둘다 값이 있어야만 save버튼이 보이도록
+                        btnSavePicture.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
                   break;
         }
