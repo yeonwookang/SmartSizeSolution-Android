@@ -25,6 +25,10 @@ public class DotPoint implements Serializable {
         this.caption = caption;
     }
 
+    public DotPoint(){
+        this(0,0,"중간점");
+    }
+
     public void setPointPosition(float x, float y) {
         this.x = setNumberFormat(x);
         this.y = setNumberFormat(y);

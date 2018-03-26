@@ -5,7 +5,19 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/view_user_state"
+        android:background="#000000"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/layout_menu"
+        android:background="#000000">
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,9 +39,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SELECT YOUR FRONT IMAGE"
-                android:textSize="25dp"
+                android:textSize="30sp"
                 android:textColor="#7272BA"
                 android:textStyle="bold"
+                android:letterSpacing="0.15"
+                android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"/>
 
@@ -45,11 +59,13 @@
             android:visibility="gone"/>
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/txt_side_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SELECT YOUR SIDE IMAGE"
-                android:textSize="25dp"
+                android:textSize="30sp"
+                android:letterSpacing="0.15"
                 android:textColor="#7272BA"
                 android:textStyle="bold"
                 android:layout_centerVertical="true"
@@ -64,7 +80,7 @@
     <RelativeLayout
         android:id="@+id/view_user_state"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"

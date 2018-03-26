@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ToggleButton
         android:id="@+id/btn_user_help"
         android:layout_marginTop="20dp"
@@ -25,38 +24,6 @@
         android:layout_height="58dp"
         android:id="@+id/txt_user_help"
         android:layout_below="@id/btn_user_help"/>
-
-   <!-- <Button
-        android:backgroundTint="@android:color/transparent"
-        android:background="@drawable/dialog"
-        android:id="@+id/btn_help_txt"
-        android:visibility="visible"
-        android:layout_width="125dp"
-        android:layout_height="58dp"
-        android:layout_below="@+id/btn_user_help" />-->
-
-  <!--  <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/view_user_help"
-        android:visibility="invisible"
-        android:background="#764DC1"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/btn_user_help">-->
-  <!--      <TextView
-            android:id="@+id/txt_user_help"
-            android:visibility="visible"
-            android:layout_gravity="center"
-            android:textColor="#000000"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_user_help"
-            android:text="도움말"/>-->
-
-<!--
-    </LinearLayout>
--->
 
     <Button
         android:background="@drawable/btn_set_save"
@@ -88,15 +55,6 @@
 
     </com.example.jekan.fyp_test.view.Dot>
 
- <!--   <LinearLayout
-        android:background="#cccccc"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|center_horizontal">
-    </LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/layout_seek"
         android:layout_width="match_parent"
@@ -110,7 +68,7 @@
             android:layout_height="30dp"
             android:min="10"
             android:max="100"
-            android:progress="0"
+            android:progress="8"
             android:layout_weight="1"/>
 
     </LinearLayout>

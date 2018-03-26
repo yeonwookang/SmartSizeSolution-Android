@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -62,17 +63,37 @@ public class Dot extends View{
         backgroundPaint.setAlpha(0);
 
         myPaint = new Paint();
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "dohyun.ttf");
+        myPaint.setTypeface(typeface);
+        myPaint.setTextAlign(Paint.Align.CENTER);
         myPaint.setColor(Color.rgb(117, 77, 193));
         myPaint.setAntiAlias(true);
         myPaint.setTextSize(30);
 
 
-       /* // 점 위의 캡션
-        captions = new Paint();
-        captions.setColor(Color.rgb(117, 77, 193));
-        captions.setTextSize(30);*/
+        if(isFront){
+            pointList.add(new DotPoint(x + 600, y + 300, frontCaptions[0])); //어깨
+            pointList.add(new DotPoint(x + 700, y + 500, frontCaptions[1])); //겨드랑이
+            pointList.add(new DotPoint(x + 700, y + 600, frontCaptions[2])); //가슴
+            pointList.add(new DotPoint(x + 400, y + 800, frontCaptions[3])); //손목
+            pointList.add(new DotPoint(x + 500, y + 700, frontCaptions[4])); //허리
+            pointList.add(new DotPoint(x + 700, y + 750, frontCaptions[5])); //엉덩이
+            pointList.add(new DotPoint(x + 600, y + 900, frontCaptions[6])); //사타구니
+            pointList.add(new DotPoint(x + 400, y + 1200, frontCaptions[7])); //발목
 
+        }else{
+            pointList.add(new DotPoint(x + 600, y + 100, sideCaptions[0])); //머리
+            pointList.add(new DotPoint(x + 400, y + 500, sideCaptions[1])); //옆가슴
+            pointList.add(new DotPoint(x + 700, y + 500, sideCaptions[2])); //등
+            pointList.add(new DotPoint(x + 500, y + 800, sideCaptions[3])); //앞허리
+            pointList.add(new DotPoint(x + 700, y + 800, sideCaptions[4])); //뒷허리
+            pointList.add(new DotPoint(x + 500, y + 850, sideCaptions[5])); //앞엉덩이
+            pointList.add(new DotPoint(x + 700, y + 850, sideCaptions[6])); //뒷엉덩이
+            pointList.add(new DotPoint(x + 500, y + 1200, sideCaptions[7])); //발바닥
+        }
 
+/*
+        점위치 임의 지정으로 변경
         // 처음 생성될 때 임의의 좌표를 점 최대치 개수 만큼 배열에 저장
         // 점을 조금씩 띄워서 배치해두었음
         for(int i = 0; i < MAXDOT; i++) {
@@ -81,9 +102,8 @@ public class Dot extends View{
             }else{
                 pointList.add(new DotPoint(x + (i * 100), y + (i * 100), sideCaptions[i])); //측면일때
             }
-
-        }
-
+       }
+*/
 
 
     }

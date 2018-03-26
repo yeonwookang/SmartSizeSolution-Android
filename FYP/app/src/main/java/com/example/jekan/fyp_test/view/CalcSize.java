@@ -27,67 +27,90 @@ public class CalcSize {
 
     // 키, ratio 계산
     public float clacHeightPixel() {
-        /*
-        DotPoint s_head = sPoints.get(0); // 옆 머리
-        DotPoint s_foot = sPoints.get(7); // 옆 발바닥
-        height = s_foot.getPointY() - s_head.getPointY(); // 키에 해당하는 픽셀 수
-        this.ratio =actual_height / height; // ratio값 계산*/
-
-        height = getPointDistance(sPoints.get(0), sPoints.get(7));
+        height = getStraightDistanceHeight(sPoints.get(0), sPoints.get(7));
         this.ratio = actual_height/height;
         return ratio;
     }
-   /* //1. 상체길이(어깨 - 앞뒷허리(중간))
-    public float getTopLength(){
 
+    //1. 상체길이(어깨 - 앞뒷허리(중간)) ....? -> 어깨 - 허리까지의 길이
+    public float getTopLength(){/*
+        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
+        return getStraightDistanceHeight(fPoints.get(0), middlePoint)*ratio;*/
+        return getStraightDistanceHeight(fPoints.get(0), fPoints.get(4))*ratio;
     }
-    //2. 하체길이(앞뒷허리(중간)-발바닥)
-    public float getLegLength(){
 
-    }*/
-    //3. 어깨너비(어깨 - 사타구니)*2
+    //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이
+    public float getLegLength(){/*
+        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
+        return getStraightDistanceHeight(middlePoint, sPoints.get(7))*ratio;*/
+        return getStraightDistanceHeight(fPoints.get(4), sPoints.get(7))*ratio;
+    }
+    //상하체 길이는 좀 더 생각해보자...
+
+
+    //3. 어깨너비(어깨 - 사타구니의 직선거리)*2
     public float getShoulderWidth() {
-        return  getPointDistance(fPoints.get(0), fPoints.get(6))*2*ratio;
+        return getStraightDistanceWidth(fPoints.get(0), fPoints.get(6))*2*ratio;
     }
 
-    //4. 가슴너비(가슴 - 사타구니)*2
+    //4. 가슴너비(가슴 - 사타구니의 직선거리)*2
     public float getChestWidth(){
-        return getPointDistance(fPoints.get(2), fPoints.get(6))*2;
+        //return getPointDistance(fPoints.get(2), fPoints.get(6))*2;
+        return getStraightDistanceWidth(fPoints.get(2), fPoints.get(6))*2*ratio;
     }
 
     //5. 암홀너비(어깨 - 겨드랑이)
     public float getArmHoleLength(){
         return getPointDistance(fPoints.get(0),fPoints.get(1))*ratio;
     }
+
     //6. 소매길이(어깨 - 손목)
     public float getArmLength() {
         return getPointDistance(fPoints.get(0), fPoints.get(3))*ratio;
     }
 
-    //7. 허리너비(허리 - 사타구니)*2
+    //7. 허리너비(허리 - 사타구니의 직선거리)*2
     public float getWaistWidth(){
-        return  getPointDistance(fPoints.get(4), fPoints.get(6))*2*ratio;
+        //return  getPointDistance(fPoints.get(4), fPoints.get(6))*2*ratio;
+        return getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio;
     }
-    //8. 엉덩이너비(엉덩이 - 사타구니)*2
+    //8. 엉덩이너비(엉덩이 - 사타구니의 직선거리)*2
     public float getHipWidth(){
-        return getPointDistance(fPoints.get(5), fPoints.get(6))*2;
+        return getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*2*ratio;
     }
 
     //9. 허벅지너비(엉덩이 - 사타구니)
     public float getThighWidth(){
-        return getPointDistance(fPoints.get(5), fPoints.get(6));
+        return getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*ratio;
     }
 
-   /* //10. 밑위길이(앞뒷허리(중간) - 사타구니)
+    //10. 밑위길이(앞뒷허리(중간) - 사타구니)
     public float getCrotchLength(){
-       // sPoints.get()
-       // return getPointDistance();
-    }*/
+        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4),"허리중간점");
+        return getStraightDistanceHeight(middlePoint, fPoints.get(6))*ratio;
+    }
 
+    //직선거리 - 가로
+    public float getStraightDistanceWidth(DotPoint point1, DotPoint point2){
+        return Math.abs(point1.getPointX() - point2.getPointX());
+    }
 
-    // 점과 점 사이의 거리
-    // 항상 직선일리 없으니까 거리공식 쓰는게 좋을듯해!
-    // 그런데 그렇게하면 소수점 자리가 엄청 길게 나와서 어디까지 끊을지 생각해보자(DB)
+    //직선거리 - 세로
+    public float getStraightDistanceHeight(DotPoint point1, DotPoint point2){
+        return Math.abs(point1.getPointY() - point2.getPointY());
+    }
+
+    //중간점
+    public DotPoint getMiddlePoint(DotPoint point1, DotPoint point2, String caption){
+        DotPoint middlePoint = new DotPoint();
+        float pointX = Math.abs(point1.getPointX() - point2.getPointX());
+        float pointY = Math.abs(point1.getPointY() - point2.getPointY());
+        middlePoint.setPointPosition(pointX/2, pointY/2);
+        middlePoint.setCaption(caption);
+        return middlePoint;
+    }
+
+    //점사이 거리
     public float getPointDistance(DotPoint point1, DotPoint point2){
 
         double pointX = Math.abs(point1.getPointX()-point2.getPointX());
