@@ -62,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         webview.setWebViewClient(new WebViewClient()); // 새창에서 뜨지 않도록 설정
         Log.d("웹뷰 초기화", "성공");
 
+        Button btn_menu_down = (Button)findViewById(R.id.btn_menu_down);
+        btn_menu_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slidingPage.startAnimation(translateDownAnim);
+            }
+        }); //btn_down 버튼 추가된거
+        
         // 하단바 버튼 설정
         beforeBtn = (Button) findViewById(R.id.beforeBtn); // 이전 페이지
         beforeBtn.setOnClickListener(new View.OnClickListener() {

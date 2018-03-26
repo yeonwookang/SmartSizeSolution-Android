@@ -13,67 +13,99 @@
         android:layout_below="@id/view_user_state"
         android:layout_above="@id/layout_menu">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/img_user_front"
-            android:background="#D4F4FA"/>
+            android:id="@+id/img_user_front"/>
 
+            <TextView
+                android:id="@+id/txt_front_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELECT YOUR FRONT IMAGE"
+                android:textSize="25dp"
+                android:textColor="#7272BA"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/img_user_side"
-            android:background="#FFD9FA"
             android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/txt_side_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELECT YOUR SIDE IMAGE"
+                android:textSize="25dp"
+                android:textColor="#7272BA"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
     </RelativeLayout>
-
-
 
 
     <RelativeLayout
         android:id="@+id/view_user_state"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="63dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#6f6e6e">
+        android:background="#455975">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp">
+            android:layout_marginTop="5dp">
 
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="60dp"
-            android:id="@+id/btn_user_front"
-            android:background="@drawable/btn_front"/>
+            <Button
+                android:id="@+id/btn_user_front"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/btn_front_pink" />
 
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:id="@+id/btn_user_side"
-            android:background="@drawable/btn_side"/>
+            <Button
+                android:id="@+id/btn_user_side"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_side_white" />
         </LinearLayout>
 
 
-    <Button
-        android:layout_alignParentRight="true"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_margin="15dp"
-        android:id="@+id/btn_close_set_Image"
-        android:background="@drawable/btn_close" />
+        <Button
+            android:id="@+id/btn_close_set_Image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_x"
+            android:layout_marginTop="5dp"/>
 
     </RelativeLayout>
 
 
     <RelativeLayout
-        android:background="#764DC1"
+        android:background="#32435B"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:id="@+id/layout_menu">
@@ -92,8 +124,8 @@
         <Button
             android:layout_margin="15dp"
             android:background="@drawable/btn_camera"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
             android:id="@+id/btn_take_picture_set_Image"/>
 
         </LinearLayout>
@@ -108,9 +140,9 @@
         <Button
             android:layout_margin="15dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_gallery"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
+            android:background="@drawable/btn_album"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
             android:id="@+id/btn_gallery_set_Image"/>
 
     </LinearLayout>
@@ -124,8 +156,8 @@
         <Button
             android:layout_margin="15dp"
             android:background="@drawable/btn_save"
-            android:layout_width="75dp"
-            android:layout_height="30dp"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
             android:id="@+id/btn_save_set_Image"
             android:visibility="invisible"/>
 
@@ -139,9 +171,9 @@
 
         <Button
             android:layout_margin="15dp"
-            android:background="@drawable/btn_rotate"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:background="@drawable/btn_revise"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
             android:id="@+id/btn_rotate_set_Image"
             android:visibility="invisible"/>
 
@@ -155,9 +187,9 @@
 
         <Button
             android:layout_margin="15dp"
-            android:background="@drawable/btn_draw"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:background="@drawable/btn_pen"
+            android:layout_width="49dp"
+            android:layout_height="32dp"
             android:id="@+id/btn_draw_set_Image"
             android:visibility="invisible"/>
     </LinearLayout>

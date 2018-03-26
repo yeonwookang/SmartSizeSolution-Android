@@ -7,20 +7,33 @@
 
     <ToggleButton
         android:id="@+id/btn_user_help"
-        android:layout_margin="10dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="12dp"
+        android:layout_height="22dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/btn_question"
+        android:background="@drawable/btn_help"
         android:textOn=""
         android:textOff=""/>
+
     <Button
-        android:text="설명들어갈부분"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:clickable="false"
+        android:layout_width="125dp"
+        android:background="@drawable/dialog"
+        android:layout_height="58dp"
+        android:id="@+id/txt_user_help"
+        android:layout_below="@id/btn_user_help"/>
+
+   <!-- <Button
+        android:backgroundTint="@android:color/transparent"
+        android:background="@drawable/dialog"
         android:id="@+id/btn_help_txt"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_user_help" />
+        android:visibility="visible"
+        android:layout_width="125dp"
+        android:layout_height="58dp"
+        android:layout_below="@+id/btn_user_help" />-->
 
   <!--  <LinearLayout
         android:orientation="vertical"
@@ -46,14 +59,13 @@
 -->
 
     <Button
-        android:textColor="#ffffff"
-        android:background="#764DC1"
+        android:background="@drawable/btn_set_save"
         android:id="@+id/btn_save_draw"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="53dp"
+        android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:text="저장"/>
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -102,10 +114,5 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-
-
-
-
-
 
 </RelativeLayout>

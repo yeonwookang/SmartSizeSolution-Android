@@ -160,13 +160,6 @@ public class Dot extends View{
         // 선택된 점은 표시
         for(int i = 0; i < MAXDOT; i++) {
 
-            if(isFront){
-                pointList.get(i).setCaption(frontCaptions[i]);
-            }else{
-                pointList.get(i).setCaption(sideCaptions[i]);
-            }
-            canvas.drawText(pointList.get(i).getCaption(), pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), myPaint);
-
             if(i == index) {
                 float selected = (float) (RADIUS / 2.5); // 선택된 점 테두리 굵기 조정
                 // 선택된 점에 해당하면 이중 점
@@ -179,6 +172,15 @@ public class Dot extends View{
                 myPaint.setColor(Color.rgb(117, 77, 193)); // 나머진 보라색
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
             }
+
+            if(isFront){
+                pointList.get(i).setCaption(frontCaptions[i]);
+                canvas.drawText(pointList.get(i).getCaption(), pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), myPaint);
+            }else{
+                pointList.get(i).setCaption(sideCaptions[i]);
+                canvas.drawText(pointList.get(i).getCaption(), pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), myPaint);
+            }
+
 
            /* if(isFront)
                 canvas.drawText(frontCaptions[i], pointList.get(i).getPointX() - 25, (pointList.get(i).getPointY() - 20) - (this.RADIUS ), captions); // 점 캡션

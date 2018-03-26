@@ -37,50 +37,52 @@ public class CalcSize {
         this.ratio = actual_height/height;
         return ratio;
     }
+   /* //1. 상체길이(어깨 - 앞뒷허리(중간))
+    public float getTopLength(){
 
-    // 어깨 너비
+    }
+    //2. 하체길이(앞뒷허리(중간)-발바닥)
+    public float getLegLength(){
+
+    }*/
+    //3. 어깨너비(어깨 - 사타구니)*2
     public float getShoulderWidth() {
-     /* DotPoint f_shoulder = fPoints.get(0);
-        DotPoint f_groin = fPoints.get(6);
-        float width = (f_groin.getPointX() - f_shoulder.getPointX()) * 2;
-        return width;*/
-     return  getPointDistance(fPoints.get(0), fPoints.get(6))*2*ratio;
+        return  getPointDistance(fPoints.get(0), fPoints.get(6))*2*ratio;
     }
 
-    // 팔 길이 (거리 공식) {
-    public float getArmLength() {
-      /* DotPoint f_shoulder = fPoints.get(0);
-        DotPoint f_wrist = fPoints.get(3);
-        float length = 0;
-        return length;*/
-      return getPointDistance(fPoints.get(0), fPoints.get(3))*ratio;
-    }
-
-    //가슴 너비(둘레x)
+    //4. 가슴너비(가슴 - 사타구니)*2
     public float getChestWidth(){
         return getPointDistance(fPoints.get(2), fPoints.get(6))*2;
     }
 
-    //허리
-    public float getWaistWidth(){
-        return  getPointDistance(fPoints.get(4), fPoints.get(6))*2;
-
+    //5. 암홀너비(어깨 - 겨드랑이)
+    public float getArmHoleLength(){
+        return getPointDistance(fPoints.get(0),fPoints.get(1))*ratio;
+    }
+    //6. 소매길이(어깨 - 손목)
+    public float getArmLength() {
+        return getPointDistance(fPoints.get(0), fPoints.get(3))*ratio;
     }
 
-    //엉덩이
+    //7. 허리너비(허리 - 사타구니)*2
+    public float getWaistWidth(){
+        return  getPointDistance(fPoints.get(4), fPoints.get(6))*2*ratio;
+    }
+    //8. 엉덩이너비(엉덩이 - 사타구니)*2
     public float getHipWidth(){
         return getPointDistance(fPoints.get(5), fPoints.get(6))*2;
     }
 
-    //허벅지
+    //9. 허벅지너비(엉덩이 - 사타구니)
     public float getThighWidth(){
         return getPointDistance(fPoints.get(5), fPoints.get(6));
     }
 
-    //다리길이 (일단 정면기준으로 작성. 측면에서 재는 것이 맞나 고민!)
-    public float getLegLength(){
-        return getPointDistance(fPoints.get(4), fPoints.get(7));
-    }
+   /* //10. 밑위길이(앞뒷허리(중간) - 사타구니)
+    public float getCrotchLength(){
+       // sPoints.get()
+       // return getPointDistance();
+    }*/
 
 
     // 점과 점 사이의 거리

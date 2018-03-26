@@ -46,34 +46,17 @@ public class DrawActivity extends Activity{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //LinearLayout helpView = (LinearLayout) findViewById(R.id.view_user_help);
                 //TextView helpText = (TextView)findViewById(R.id.txt_user_help);
-                Button btn_help = (Button)findViewById(R.id.btn_help_txt);
-                if(isChecked){
+               // Button btn_help = (Button)findViewById(R.id.btn_help_txt);
+                Button btn_help = (Button) findViewById(R.id.txt_user_help);
+                if(isChecked)
                     btn_help.setVisibility(View.VISIBLE);
-                }
-                   // helpText.setVisibility(View.VISIBLE);
-                else{
+                else
                     btn_help.setVisibility(View.INVISIBLE);
-                }
-                    //helpText.setVisibility(View.INVISIBLE);
             }
         });
-        //helpView.setVisibility(View.INVISIBLE);
-     /*   helpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(helpBtn.isChecked()){
-                    Toast.makeText(getApplicationContext(), "눌림1", Toast.LENGTH_SHORT).show();
-                    helpView.setVisibility(View.VISIBLE);
-                }else{
-                    Toast.makeText(getApplicationContext(), "눌림2", Toast.LENGTH_SHORT).show();
-                    helpView.setVisibility(View.INVISIBLE);
-                }
-            }
-        });*/
 
         // EXIT 버튼 설정
         Button saveBtn = (Button) findViewById(R.id.btn_save_draw);
-
         // OK 버튼 클릭시 MainActivity로 돌아가야함
         // 좌표값들 전달
         dot = (Dot) findViewById(R.id.dot);

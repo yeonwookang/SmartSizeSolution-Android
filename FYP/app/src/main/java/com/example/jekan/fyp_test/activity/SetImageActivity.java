@@ -2,6 +2,7 @@ package com.example.jekan.fyp_test.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,8 @@ public class SetImageActivity extends AppCompatActivity {
 
     private boolean isFront = true;
 
+    TextView txt_front_default, txt_side_default;
+    private Button btnFront,btnSide;
     private Button btnRotateImage, btnDrawDot, btnSavePicture;
     private ImageView imgUserFront, imgUserSide = null;
     private String photoPath = null;
@@ -52,27 +56,49 @@ public class SetImageActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_image);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "bebas.otf");
+        txt_front_default = (TextView)findViewById(R.id.txt_front_default);
+        txt_front_default.setTypeface(typeface);
+        txt_side_default = (TextView)findViewById(R.id.txt_side_default);
+        txt_side_default.setTypeface(typeface);
         initState();
     }
 
     public void initState(){
 
-        Button btnFront = (Button)findViewById(R.id.btn_user_front);
+        btnFront = (Button)findViewById(R.id.btn_user_front);
         btnFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isFront=true;
+                btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_pink));
+                btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_white));
+                if(photoPathArr[0]==null)
+                     txt_front_default.setVisibility(View.VISIBLE);
+                else
+                    txt_front_default.setVisibility(View.INVISIBLE);
+
                 imgUserFront.setVisibility(View.VISIBLE);
                 imgUserSide.setVisibility(View.INVISIBLE);
+                txt_side_default.setVisibility(View.INVISIBLE);
             }
         });
-        Button btnSide = (Button)findViewById(R.id.btn_user_side);
+        btnSide = (Button)findViewById(R.id.btn_user_side);
         btnSide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isFront=false;
+                btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_white));
+                btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_pink));
                 imgUserFront.setVisibility(View.INVISIBLE);
+                txt_front_default.setVisibility(View.INVISIBLE);
                 imgUserSide.setVisibility(View.VISIBLE);
+
+                if(photoPathArr[1]==null)
+                    txt_side_default.setVisibility(View.VISIBLE);
+                else
+                    txt_side_default.setVisibility(View.INVISIBLE);
+
             }
         });
 
@@ -239,11 +265,13 @@ public class SetImageActivity extends AppCompatActivity {
         if(photoPath!=null && photoPath.length()>0){
             if(isFront){
                 photoPathArr[0] = photoPath;
+                txt_front_default.setVisibility(View.INVISIBLE);
                 Glide.with(this).load(photoPathArr[0]).into(imgUserFront);
                 btnRotateImage.setVisibility(View.VISIBLE);
                 btnDrawDot.setVisibility(View.VISIBLE);
             }else{
                 photoPathArr[1] = photoPath;
+                txt_side_default.setVisibility(View.INVISIBLE);
                 Glide.with(this).load(photoPathArr[1]).into(imgUserSide);
                 btnRotateImage.setVisibility(View.VISIBLE);
                 btnDrawDot.setVisibility(View.VISIBLE);
@@ -256,8 +284,10 @@ public class SetImageActivity extends AppCompatActivity {
 
     public void userImageRotate(String photoPath, float rotate){
         if(isFront){
+            txt_front_default.setVisibility(View.INVISIBLE);
             Glide.with(this).load(photoPath).transform( new RotateTransformation(this, rotate )).into(imgUserFront);
         }else{
+            txt_side_default.setVisibility(View.INVISIBLE);
             Glide.with(this).load(photoPath).transform( new RotateTransformation(this, rotate )).into(imgUserSide);
         }
     }

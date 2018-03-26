@@ -1,174 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_above="@+id/layout_menu_item"/>
 
-        <!-- 일반 레이아웃 -->
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_above="@id/layout_menu_item"
+        android:id="@+id/slidingPage"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="55dp"
+            android:background="#455975"
+            android:gravity="right">
 
-            <WebView
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"/>
+            <Button
+                android:id="@+id/btn_menu_down"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_down"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"/>
 
         </LinearLayout>
 
-        <!-- 슬라이딩 메뉴 레이아웃 -->
-        <LinearLayout
-            android:id="@+id/slidingPage"
+        <!--로그인을 안했을 때// 서버 테스트 전 로그인했다고 가정함-->
+        <!--login-->
+        <Button
+            android:id="@+id/signInBtn"
+            android:background="@drawable/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_weight="1">
+            android:layout_height="48dp"
+            android:visibility="gone"/>
+        <!--//join-->
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_join"
+            android:visibility="gone"/>
+        <!--//cart-->
+        <Button
+            android:id="@+id/btn_cart"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_cart"
+            android:visibility="gone"/>
 
+        <!-- 로그인을 했을 때-->
+        <!--//로그 아웃-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/btn_logout"
+            android:background="@drawable/btn_log_out"/>
+        <!--//마이페이지-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/btn_my_page"
+            android:background="@drawable/btn_my_page"/>
+        <!--//오토사이즈-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/autoSizeBtn"
+            android:background="@drawable/btn_auto_size"/>
+        <!--//카트// 로그인 안했을 때 버튼이랑 공통-->
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_menu_item"
+        android:background="#32435B"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Login"/>
-
-                </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/signInBtn"
-                    android:background="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:layout_gravity="start"
-                    android:textSize="18dp" />
-
-                <LinearLayout
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:orientation="vertical">
-                </LinearLayout>
-
-                <LinearLayout
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="AutoSize"/>
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/autoSizeBtn"
-                    android:background="@color/colorAccent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="AutoSize"
-                    android:layout_gravity="start"
-                    android:textSize="18dp"
-                    />
-                <LinearLayout
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:orientation="vertical">
-                </LinearLayout>
+                    android:layout_margin="10dp"
+                    android:id="@+id/beforeBtn"
+                    android:layout_gravity="center"
+                    android:layout_width="49dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_back"/>
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/nextBtn"
+                    android:layout_gravity="center"
+                    android:layout_width="49dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_front"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/homeBtn"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="49dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_home"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/refreshBtn"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="49dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_refresh"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+
+                <Button
+                    android:id="@+id/etcBtn"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="49dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_etc"
+                    android:layout_marginRight="10dp"/>
+
+            </LinearLayout>
         </LinearLayout>
+    </RelativeLayout>
 
-    </FrameLayout>
-
-    <!-- 하단 버튼 바 -->
-    <LinearLayout
-        android:background="@color/colorPrimaryDark"
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:gravity="center"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/beforeBtn"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            android:text="Before" />
-
-        <Button
-            android:id="@+id/nextBtn"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            android:text="Next" />
-
-        <Button
-            android:id="@+id/homeBtn"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            android:text="Home" />
-
-        <Button
-            android:id="@+id/refreshBtn"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            android:text="Refresh" />
-
-        <Button
-            android:id="@+id/etcBtn"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/colorAccent"
-            android:textSize="13dp"
-            android:text="Etc" />
-
-    </LinearLayout>
-
-</LinearLayout>
-
+</RelativeLayout>
