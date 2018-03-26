@@ -18,7 +18,7 @@
         android:id="@+id/slidingPage"
         android:layout_width="match_parent"
         android:layout_height="360dp"
-        android:background="#ffffff"
+        android:background="#eaeaea"
         android:orientation="vertical"
         android:visibility="gone">
 

@@ -32,18 +32,18 @@ public class CalcSize {
         return ratio;
     }
 
-    //1. 상체길이(어깨 - 앞뒷허리(중간)) ....? -> 어깨 - 허리까지의 길이
+    //1. 상체길이(어깨 - 앞뒷허리(중간)) ....? -> 어깨 - 허리까지의 길이 -->얘참 애매해! 목점을 알아야 할듯...?
     public float getTopLength(){/*
         DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
         return getStraightDistanceHeight(fPoints.get(0), middlePoint)*ratio;*/
         return getStraightDistanceHeight(fPoints.get(0), fPoints.get(4))*ratio;
     }
 
-    //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이
+    //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이 -> 허리 - 발목까지의 길이(발바닥에서 발목으로 변경)
     public float getLegLength(){/*
         DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
         return getStraightDistanceHeight(middlePoint, sPoints.get(7))*ratio;*/
-        return getStraightDistanceHeight(fPoints.get(4), sPoints.get(7))*ratio;
+        return getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio;
     }
     //상하체 길이는 좀 더 생각해보자...
 
@@ -85,9 +85,10 @@ public class CalcSize {
     }
 
     //10. 밑위길이(앞뒷허리(중간) - 사타구니)
-    public float getCrotchLength(){
+    public float getCrotchLength(){/*
         DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4),"허리중간점");
-        return getStraightDistanceHeight(middlePoint, fPoints.get(6))*ratio;
+        return getStraightDistanceHeight(middlePoint, fPoints.get(6))*ratio;*/
+        return getStraightDistanceHeight(fPoints.get(4), fPoints.get(6))*ratio; //급조
     }
 
     //직선거리 - 가로
@@ -101,7 +102,7 @@ public class CalcSize {
     }
 
     //중간점
-    public DotPoint getMiddlePoint(DotPoint point1, DotPoint point2, String caption){
+    public DotPoint getMiddlePoint(DotPoint point1, DotPoint point2, String caption){ //얘가 코드상에 문제가 있나..? 없는거같은데..
         DotPoint middlePoint = new DotPoint();
         float pointX = Math.abs(point1.getPointX() - point2.getPointX());
         float pointY = Math.abs(point1.getPointY() - point2.getPointY());
