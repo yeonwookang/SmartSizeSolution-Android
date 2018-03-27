@@ -192,7 +192,7 @@ public class SetImageActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "[사용자 정보]\n상체길이: "+topLength
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
-                                    +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n소매길이: "+armLength+"\n암홀너비:"+armHoleLength
+                                    +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
                                     +"\n밑위길이: "+crotcLength,Toast.LENGTH_LONG).show();
 
 

@@ -25,7 +25,7 @@
         <LinearLayout
             android:id="@+id/layout_select_menu"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="53dp"
             android:background="#455975"
             android:gravity="right">
 
@@ -36,9 +36,16 @@
                 android:layout_height="48dp"
                 android:background="@drawable/btn_down"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="11dp"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/img_slidebar_shd">
+        </LinearLayout>
+
 
         <!--로그인을 안했을 때// 서버 테스트 전 로그인했다고 가정함-->
         <!--login-->
@@ -87,8 +94,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
+        android:layout_height="2dp"
+        android:background="@drawable/img_underbar_shd"
         android:layout_above="@id/layout_menu_item"/>
 
     <RelativeLayout

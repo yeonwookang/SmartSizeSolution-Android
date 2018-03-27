@@ -40,16 +40,16 @@ public class Dot extends View{
     private int index = 0; // 초기값 0
 
     // 최대 점 개수
-    private final int MAXDOT = 8;
+    private final int MAXDOT = 10;
 
     // 좌표 리스트
     private ArrayList<DotPoint> pointList = new ArrayList<>(); //Point -> DotPoint
 
     // 점 캡션
-    // 배열 점 저장하는 순서 중요함 (정면: [0]어깨, [1]겨드랑이, [2]가슴, [3]손목, [4]허리, [5]엉덩이, [6]사타구니, [7]발목)
-    // 배열 점 저장하는 순서 중요함 (측면: [0]머리, [1]옆가슴, [2]등, [3]앞허리, [4]뒷허리, [5]앞엉덩이, [6]뒷엉덩이, [7]발바닥)
-    private String[] frontCaptions = {"어깨", "겨드랑이", "가슴", "손목", "허리", "엉덩이", "사타구니", "발목"};
-    private String[] sideCaptions = {"머리", "옆가슴", "등", "앞허리", "뒷허리", "앞엉덩이", "뒷엉덩이", "발바닥"};
+    // 배열 점 저장하는 순서 중요함 (정면: [0]어깨, [1]겨드랑이, [2]가슴, [3]손목, [4]허리, [5]엉덩이, [6]사타구니, [7]발목, [8]목, [9]골반)
+    // 배열 점 저장하는 순서 중요함 (측면: [0]머리, [1]옆가슴, [2]등, [3]앞허리, [4]뒷허리, [5]앞엉덩이, [6]뒷엉덩이, [7]발바닥, [8]앞골반, [9]뒷골반)
+    private String[] frontCaptions = {"어깨", "겨드랑이", "가슴", "손목", "허리", "엉덩이", "사타구니", "발목", "목", "골반"};
+    private String[] sideCaptions = {"머리", "옆가슴", "등", "앞허리", "뒷허리", "앞엉덩이", "뒷엉덩이", "발바닥", "앞골반", "뒷골반"};
 
 
     // 캡션 플래그
@@ -72,24 +72,28 @@ public class Dot extends View{
 
 
         if(isFront){
-            pointList.add(new DotPoint(x + 600, y + 300, frontCaptions[0])); //어깨
-            pointList.add(new DotPoint(x + 700, y + 500, frontCaptions[1])); //겨드랑이
+            pointList.add(new DotPoint(x + 300, y + 600, frontCaptions[0])); //어깨
+            pointList.add(new DotPoint(x + 600, y + 600, frontCaptions[1])); //겨드랑이
             pointList.add(new DotPoint(x + 700, y + 600, frontCaptions[2])); //가슴
             pointList.add(new DotPoint(x + 400, y + 800, frontCaptions[3])); //손목
-            pointList.add(new DotPoint(x + 500, y + 700, frontCaptions[4])); //허리
-            pointList.add(new DotPoint(x + 700, y + 750, frontCaptions[5])); //엉덩이
+            pointList.add(new DotPoint(x + 500, y + 750, frontCaptions[4])); //허리
+            pointList.add(new DotPoint(x + 300, y + 750, frontCaptions[5])); //엉덩이
             pointList.add(new DotPoint(x + 600, y + 900, frontCaptions[6])); //사타구니
-            pointList.add(new DotPoint(x + 400, y + 1200, frontCaptions[7])); //발목
+            pointList.add(new DotPoint(x + 400, y + 1200,frontCaptions[7])); //발목
+            pointList.add(new DotPoint(x + 400, y + 500, frontCaptions[8])); //목
+            pointList.add(new DotPoint(x + 400, y + 950, frontCaptions[9]));//골반
 
         }else{
-            pointList.add(new DotPoint(x + 600, y + 100, sideCaptions[0])); //머리
+            pointList.add(new DotPoint(x + 600, y + 200, sideCaptions[0])); //머리
             pointList.add(new DotPoint(x + 400, y + 500, sideCaptions[1])); //옆가슴
             pointList.add(new DotPoint(x + 700, y + 500, sideCaptions[2])); //등
             pointList.add(new DotPoint(x + 500, y + 800, sideCaptions[3])); //앞허리
-            pointList.add(new DotPoint(x + 700, y + 800, sideCaptions[4])); //뒷허리
+            pointList.add(new DotPoint(x + 800, y + 800, sideCaptions[4])); //뒷허리
             pointList.add(new DotPoint(x + 500, y + 850, sideCaptions[5])); //앞엉덩이
             pointList.add(new DotPoint(x + 700, y + 850, sideCaptions[6])); //뒷엉덩이
-            pointList.add(new DotPoint(x + 500, y + 1200, sideCaptions[7])); //발바닥
+            pointList.add(new DotPoint(x + 500, y + 1300,sideCaptions[7])); //발바닥
+            pointList.add(new DotPoint(x + 700, y + 900, sideCaptions[8])); //앞골반
+            pointList.add(new DotPoint(x + 800, y + 900, sideCaptions[9])); //뒷골반
         }
 
 /*

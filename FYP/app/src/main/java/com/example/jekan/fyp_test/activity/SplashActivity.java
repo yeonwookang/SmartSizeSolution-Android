@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         splashImg = (ImageView)findViewById(R.id.img_splash_background);
         Glide.with(splashImg.getContext()).load(R.drawable.sss_splash).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(splashImg);
         Handler handler = new Handler();
-        handler.postDelayed(new SplashHandler(), 3000);
+        handler.postDelayed(new SplashHandler(), 2800);
     }
 
     /* 로딩 화면 스플래시 핸들러 */
