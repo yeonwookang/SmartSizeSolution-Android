@@ -1,12 +1,15 @@
 package com.example.jekan.fyp_test.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -17,7 +20,35 @@ import com.example.jekan.fyp_test.R;
 import com.example.jekan.fyp_test.view.CalcSize;
 import com.example.jekan.fyp_test.view.DotPoint;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by jekan on 2018-02-20.
@@ -30,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
     // 컴포넌트
     private WebView webview; // 웹뷰
+    public HttpClient httpclient = new DefaultHttpClient(); //멤버 변수로 선언
+    public android.webkit.CookieManager cookieManager;
+    public String sss_domain="http://52.79.137.54";
 
     // 하단 바 버튼
     private Button beforeBtn;
@@ -55,12 +89,71 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        CookieSyncManager.createInstance(this);
+        cookieManager = android.webkit.CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        /*CookieSyncManager.getInstance().startSync();*/
+        new Thread(){
+            public void run(){
+                setSyncCookie();
+            }
+        }.start();
+
         // 웹뷰 설정
         webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true); // 자바스크립트 허용
+        webview.getSettings().setDomStorageEnabled(true);
         webview.loadUrl("http://www.smartsizeservice.xyz/index.php?action=main"); // url
-        webview.setWebViewClient(new WebViewClient()); // 새창에서 뜨지 않도록 설정
-        Log.d("웹뷰 초기화", "성공");
+        webview.setWebViewClient(new WebViewClient() {
+            // 페이지 읽기가 시작되었을 때의 동작을 설정한다
+
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap b) {
+                Toast.makeText(getApplicationContext(), url+"--> onPageStarted", Toast.LENGTH_SHORT).show();
+             //   String cookies = cookieM
+              //  String cookies = android.webkit.CookieManager.getInstance().getCookie(url);
+               // Toast.makeText(getApplicationContext(),"All Cookies 2222" + cookies , Toast.LENGTH_LONG).show();
+
+            }
+
+            // 페이지 읽기가 끝났을 때의 동작을 설정한다
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Toast.makeText(getApplicationContext(), url+"-->onPageFinished", Toast.LENGTH_SHORT).show();
+
+
+              /*  CookieSyncManager.getInstance().sync();
+                URL url1 = null;
+                try {
+                    url1 = new URL(url);
+                }
+                catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println("C sharp corner user Ref " + url1.getRef());
+                System.out.println(" C sharp corner user host " + url1.getHost());
+                System.out.println("C sharp corner user authority " + url1.getAuthority());
+                String cookies = android.webkit.CookieManager.getInstance().getCookie(url);
+                System.out.println("All COOKIES " + cookies);
+                Toast.makeText(getApplicationContext(),"All Cookies " + cookies , Toast.LENGTH_LONG).show();
+
+                *//*CookieSyncManager.getInstance().sync();
+                super.onPageFinished(view, url);
+                //  String cookies = android.webkit.CookieManager.getInstance().getCookie(url);
+                String cookies = android.webkit.CookieManager.getInstance().getCookie(url);
+
+                Toast.makeText(getApplicationContext(), "어떤 값이 나올까여ㅕㅕ"+cookies, Toast.LENGTH_SHORT).show();*/
+
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+
+            }
+        });
+
 
         Button btn_menu_down = (Button)findViewById(R.id.btn_menu_down);
         btn_menu_down.setOnClickListener(new View.OnClickListener() {
@@ -111,14 +204,9 @@ public class MainActivity extends AppCompatActivity {
         setSlidingPage();
         // 슬라이딩 페이지 내부 버튼 초기화
         setSlidingPageButon();
-        Log.d("슬라이딩 페이지 초기화", "성공");
-
         etcBtn = (Button) findViewById(R.id.etcBtn); // ETC 버튼 설정
         // ETC 버튼 설정
         setEtcBtnListener();
-        Log.d("ETC 버튼 초기화", "성공");
-
-        Log.d("하단 메뉴바 초기화", "성공");
     }
 
     //메인에 다시가는걸 어떻게알까..??? - 고민
@@ -217,4 +305,107 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        CookieSyncManager.createInstance(this);
+    }
+
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+       // CookieSyncManager.getInstance().startSync();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+       /* if(CookieSyncManager.getInstance() !=  null){
+            CookieSyncManager.getInstance().stopSync();
+        }*/
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(cookieManager != null){
+            cookieManager.removeAllCookie();
+        }
+    }
+                                    //, String CookieName
+    public String getCookie(String domain){
+        String CookieValue = null;
+
+        android.webkit.CookieManager cookieManager = android.webkit.CookieManager.getInstance();
+        String cookies = cookieManager.getCookie(domain);
+       /* String[] temp=cookies.split(";");
+        for (String ar1 : temp ){
+            if(ar1.indexOf(CookieName) == 0){
+                String[] temp1=ar1.split("=");
+                CookieValue = temp1[1];
+                break;
+            }
+        }*/
+       CookieValue = cookies;
+        return CookieValue;
+    }
+
+    public void setSyncCookie() {
+        Log.e("surosuro", "token transfer start ---------------------------");
+        try {
+            List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+            nameValuePairs.add(new BasicNameValuePair("token", "TEST"));// 넘길 파라메터 값셋팅token=TEST
+            HttpParams params = new BasicHttpParams();
+            HttpPost post = new HttpPost(sss_domain);
+            post.setParams(params);
+            HttpResponse response = null;
+            BasicResponseHandler myHandler = new BasicResponseHandler();
+            String endResult = null;
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                response = httpclient.execute(post);
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                endResult = myHandler.handleResponse(response);
+            } catch (HttpResponseException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            List<Cookie> cookies = ((DefaultHttpClient)httpclient).getCookieStore().getCookies();
+            String cookieString="null";
+
+            if (!cookies.isEmpty()) {
+                for (int i = 0; i < cookies.size(); i++) {
+                    // cookie = cookies.get(i);
+                     cookieString = cookies.get(i).getName() + "="
+                            + cookies.get(i).getValue();
+                    Log.e("넌 뭐나오니 여기서", cookieString);
+                    cookieManager.setCookie(sss_domain, cookieString);
+                }
+            }else{
+                Log.e("넌 뭐나오니 여기서2222", cookieString);
+            }
+            Thread.sleep(500);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

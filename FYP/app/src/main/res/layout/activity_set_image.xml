@@ -113,6 +113,7 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_x"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="5dp"/>
 
     </RelativeLayout>
