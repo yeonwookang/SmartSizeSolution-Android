@@ -49,29 +49,41 @@
 
         <!--로그인을 안했을 때// 서버 테스트 전 로그인했다고 가정함-->
         <!--login-->
+        <LinearLayout
+            android:id="@+id/layout_when_user_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
         <Button
             android:id="@+id/signInBtn"
             android:background="@drawable/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:visibility="gone"/>
+            android:layout_height="48dp"/>
         <!--//join-->
         <Button
             android:id="@+id/btn_join"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/btn_join"
-            android:visibility="gone"/>
+            android:background="@drawable/btn_join"/>
         <!--//cart-->
         <Button
             android:id="@+id/btn_cart"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/btn_cart"
-            android:visibility="gone"/>
+            android:background="@drawable/btn_cart"/>
+        </LinearLayout>
 
         <!-- 로그인을 했을 때-->
+
         <!--//로그 아웃-->
+    <LinearLayout
+        android:id="@+id/layout_when_user_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -89,6 +101,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/autoSizeBtn"
             android:background="@drawable/btn_auto_size"/>
+
+    </LinearLayout>
         <!--//카트// 로그인 안했을 때 버튼이랑 공통-->
     </LinearLayout>
 
