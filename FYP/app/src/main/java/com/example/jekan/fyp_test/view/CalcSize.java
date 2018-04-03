@@ -1,8 +1,9 @@
 package com.example.jekan.fyp_test.view;
 
-import com.example.jekan.fyp_test.view.DotPoint;
-
 import java.util.ArrayList;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 /**
  * Created by jekan on 2018-02-21.
@@ -16,6 +17,7 @@ public class CalcSize {
     private float height;
     private ArrayList<DotPoint> fPoints, sPoints;
     private float ratio;
+    private final double PI = 3.141592;
 
     // 배열 점 저장하는 순서 중요함 (정면: [0]어깨, [1]겨드랑이, [2]가슴, [3]손목, [4]허리, [5]엉덩이, [6]사타구니, [7]발목, [8]목, [9]골반)
     // 배열 점 저장하는 순서 중요함 (측면: [0]머리, [1]옆가슴, [2]등, [3]앞허리, [4]뒷허리, [5]앞엉덩이, [6]뒷엉덩이, [7]발바닥, [8]앞골반, [9]뒷골반)
@@ -54,8 +56,18 @@ public class CalcSize {
         return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(0), fPoints.get(6))*2*ratio);
     }
 
-    //4. 가슴너비(가슴 - 사타구니의 직선거리)*2
+    //4. 가슴너비
     public float getChestWidth(){
+        //******* 2018.04.04 강연우 수정 *******//
+        // Python 연구 프로그램에서 사용한 가슴둘레 수식 사용 (논문 참고)
+        // 총 가슴 둘레의 1/4값만 구한 다음 * 2
+
+        // 정면 가슴 너비의 절반 = 겨드랑이 - 사타구니
+        // 측면 가슴 너비의 절반 = 옆가슴 - 등 / 2
+        // 정면 목 너비의 절반 = 목점 - 사타구니
+
+        // C = 정면 가슴 너비의 절반 - 정면 목 너비의 절반
+
         //return getPointDistance(fPoints.get(2), fPoints.get(6))*2;
         //return getStraightDistanceWidth(fPoints.get(2), fPoints.get(6))*2*ratio;
         return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(2), fPoints.get(6))*2*ratio);
@@ -63,9 +75,19 @@ public class CalcSize {
 
     //**************얘 고치기*****************//
     //5. 암홀너비(어깨 - 겨드랑이) -> 직선과 점사이의 거리로 해야할듯...
-    public float getArmHoleLength(){
+    public double getArmHoleLength(){
+        //******* 2018.04.04 강연우 수정 *******//
+        // 원의 둘레 공식 사용
+        // 암홀의 둘레 = 2 * PI * 반지름
+        // 따라서, 암홀의 단면 너비 = (암홀의 둘레) / 2
+        // 최종 암홀의 단면 너비 = (PI * 반지름) * ratio
+
+        double radius = getStraightDistanceHeight(fPoints.get(0),fPoints.get(1)) / 2.0;
+        double armholeWidth = (radius * PI) * ratio;
+
         //return getPointDistance(fPoints.get(0),fPoints.get(1))*ratio;
-        return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(0),fPoints.get(1))*ratio);
+        //return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(0),fPoints.get(1))*ratio);
+        return getDoubleFirstNum(armholeWidth);
     }
 
     //**************얘 고치기***************** or 가이드 라인 더 자세하게
@@ -76,10 +98,24 @@ public class CalcSize {
     }
 
     //7. 허리너비(허리 - 사타구니의 직선거리)*2
-    public float getWaistWidth(){
+    public double getWaistWidth(){
+        //******* 2018.04.04 강연우 수정 *******//
+        // 타원 둘레 근사값 구하는 공식 사용
+        // 정면 허리의 너비 (긴 축의 반지름)
+        // 측면 허리의 너비 (짧은 축의 반지름)
+
+        // 긴축 (허리 - 사타구니의 직선거리)
+        double longAxis = getStraightDistanceWidth(fPoints.get(4), fPoints.get(6));
+        // 짧은축 ( (앞허리 - 뒷허리)/2
+        double shortAxis = getStraightDistanceWidth(sPoints.get(3), sPoints.get(4));
+
+        // 타원 둘레 구하고 2로 나눈 값에 ratio를 곱한 것은 최종 허리 너비
+        double waistWidth = PI * sqrt((pow(longAxis, 2) + pow(shortAxis, 2)) / 2.0) * ratio;
+
         //return  getPointDistance(fPoints.get(4), fPoints.get(6))*2*ratio;
         //return getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio;
-        return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio);
+        //return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio);
+        return getDoubleFirstNum(waistWidth);
     }
 
     //8. 엉덩이너비(엉덩이 - 사타구니의 직선거리)*2
@@ -130,14 +166,20 @@ public class CalcSize {
 
         double pointX = Math.abs(point1.getPointX()-point2.getPointX());
         double pointY = Math.abs(point1.getPointY()-point2.getPointY());
-        double distance = Math.sqrt(Math.pow(pointX, 2)+Math.pow(pointY, 2));
+        double distance = sqrt(pow(pointX, 2)+ pow(pointY, 2));
         // distance = Math.ceil(distance);
-        double num = Math.pow(10.0, 1); //소수 첫번째 자리까지 남기기
+        double num = pow(10.0, 1); //소수 첫번째 자리까지 남기기
         distance = Math.round((distance*num)/num);
         return (float)distance;
     }
 
     public float getFloatFirstNum(float number){
+        return (float)(Math.round(number*10)/10.0);
+    }
+
+    // ******* 2018.04.04 강연우 수정 *******//
+    // double형 변수 반올림 함수
+    public float getDoubleFirstNum(double number){
         return (float)(Math.round(number*10)/10.0);
     }
 

@@ -7,17 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
@@ -184,7 +180,7 @@ public class SetImageActivity extends AppCompatActivity {
                             float armLength = calcSize.getArmLength(); //소매길이 48
                             float shoulderLength = calcSize.getShoulderWidth(); //어깨너비 27
                             float chestLength = calcSize.getChestWidth(); //가슴너비 둘레 91, 길이 29
-                            float armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
+                            double armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
                             float waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
                             float thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
                             float hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
