@@ -9,10 +9,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.jekan.fyp_test.R;
 
 import java.util.ArrayList;
 
@@ -187,13 +183,13 @@ public class Dot extends View{
             if(i == index) {
                 float selected = (float) (RADIUS / 2.5); // 선택된 점 테두리 굵기 조정
                 // 선택된 점에 해당하면 이중 점
-                myPaint.setColor(Color.rgb(117, 77, 193));
+                myPaint.setColor(Color.rgb(50, 67, 91));
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
 
                 myPaint.setColor(Color.WHITE);
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS - selected, myPaint); // 점 그리기
             }  else {
-                myPaint.setColor(Color.rgb(117, 77, 193)); // 나머진 보라색
+                myPaint.setColor(Color.rgb(50, 67, 91)); // 나머진 네이비
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
             }
 

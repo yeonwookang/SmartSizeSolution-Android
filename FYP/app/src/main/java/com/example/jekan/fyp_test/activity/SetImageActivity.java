@@ -181,7 +181,7 @@ public class SetImageActivity extends AppCompatActivity {
                             float shoulderLength = calcSize.getShoulderWidth(); //어깨너비 27
                             float chestLength = calcSize.getChestWidth(); //가슴너비 둘레 91, 길이 29
                             double armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
-                            float waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
+                            double waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
                             float thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
                             float hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
                             float crotcLength = calcSize.getCrotchLength(); //밑위 길이 15
