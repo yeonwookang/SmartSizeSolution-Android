@@ -4,14 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.example.jekan.fyp_test.activity.SetImageActivity;
 
 /**
  * Created by jekan on 2018-03-17.
@@ -35,6 +31,8 @@ public class InputDialog extends Dialog {
         setContentView(R.layout.dialog_user_height);
         editUerHeight = (EditText)findViewById(R.id.input_user_height);
 
+        // 테스트용 세팅
+        editUerHeight.setText("154.8");
         Button btnSubmit = (Button)findViewById(R.id.btn_submit_user_height);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -42,12 +42,12 @@ public class CalcSize {
         return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(8), fPoints.get(9))*ratio);
     }
 
-    //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이 -> 허리 - 발목까지의 길이(발바닥에서 발목으로 변경) - 골반에서 발목으로 변경
+    //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이 -> 허리 - 발목까지의 길이(발바닥에서 발목으로 변경) - 골반에서 발목으로 변경 - 다시 허리에서 발목
     public float getLegLength(){/*
         DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
         return getStraightDistanceHeight(middlePoint, sPoints.get(7))*ratio;*/
         //return getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio;
-        return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(9), fPoints.get(7))*ratio);
+        return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio);
     }
 
     //3. 어깨너비(어깨 - 사타구니의 직선거리)*2
@@ -99,23 +99,11 @@ public class CalcSize {
 
     //7. 허리너비(허리 - 사타구니의 직선거리)*2
     public double getWaistWidth(){
-        //******* 2018.04.04 강연우 수정 *******//
-        // 타원 둘레 근사값 구하는 공식 사용
-        // 정면 허리의 너비 (긴 축의 반지름)
-        // 측면 허리의 너비 (짧은 축의 반지름)
 
-        // 긴축 (허리 - 사타구니의 직선거리)
-        double longAxis = getStraightDistanceWidth(fPoints.get(4), fPoints.get(6));
-        // 짧은축 ( (앞허리 - 뒷허리)/2
-        double shortAxis = getStraightDistanceWidth(sPoints.get(3), sPoints.get(4));
+        double waist = getStraightDistanceWidth(fPoints.get(4), fPoints.get(6)) + getStraightDistanceWidth(sPoints.get(3), sPoints.get(4));
 
-        // 타원 둘레 구하고 2로 나눈 값에 ratio를 곱한 것은 최종 허리 너비
-        double waistWidth = PI * sqrt((pow(longAxis, 2) + pow(shortAxis, 2)) / 2.0) * ratio;
-
-        //return  getPointDistance(fPoints.get(4), fPoints.get(6))*2*ratio;
-        //return getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio;
-        //return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(4), fPoints.get(6))*2*ratio);
-        return getDoubleFirstNum(waistWidth);
+        //return getDoubleFirstNum(waistWidth);
+        return getDoubleFirstNum(waist);
     }
 
     //8. 엉덩이너비(엉덩이 - 사타구니의 직선거리)*2
@@ -127,7 +115,12 @@ public class CalcSize {
     //9. 허벅지너비(엉덩이 - 사타구니) ***********여기도 문제가 있어 사실...
     public float getThighWidth(){
        // return getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*ratio;
-        return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*ratio);
+        //************04월 05일 연우 수정**********//
+
+        double radius = getStraightDistanceWidth(fPoints.get(5),fPoints.get(6)) / 2.0;
+        double thighWidth = (radius * PI) * ratio;
+
+        return getDoubleFirstNum(thighWidth);
     }
 
     //10. 밑위길이(앞뒷허리(중간) - 사타구니) -> 골반과 사타구니 거리

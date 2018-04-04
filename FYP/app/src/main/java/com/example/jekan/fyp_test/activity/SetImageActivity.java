@@ -182,7 +182,7 @@ public class SetImageActivity extends AppCompatActivity {
                             float chestLength = calcSize.getChestWidth(); //가슴너비 둘레 91, 길이 29
                             double armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
                             double waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
-                            float thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
+                            double thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
                             float hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
                             float crotcLength = calcSize.getCrotchLength(); //밑위 길이 15
 
@@ -190,6 +190,11 @@ public class SetImageActivity extends AppCompatActivity {
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
                                     +"\n밑위길이: "+crotcLength,Toast.LENGTH_LONG).show();
+
+                            Log.d("Size","[사용자 정보]\n상체길이: "+topLength
+                                    +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
+                                    +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
+                                    +"\n밑위길이: "+crotcLength);
 
 
                            /* Intent intent = new Intent(SetImageActivity.this, MainActivity.class);A

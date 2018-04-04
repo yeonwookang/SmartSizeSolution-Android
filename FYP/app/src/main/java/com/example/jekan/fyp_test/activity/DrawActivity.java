@@ -8,16 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
-import com.example.jekan.fyp_test.view.Dot;
 import com.example.jekan.fyp_test.R;
 import com.example.jekan.fyp_test.RotateTransformation;
+import com.example.jekan.fyp_test.view.Dot;
 import com.example.jekan.fyp_test.view.DotPoint;
 
 import java.util.ArrayList;
@@ -72,6 +69,7 @@ public class DrawActivity extends Activity{
         isFront = (boolean) getIntent().getExtras().get("isFront");
         Log.d("isFront(DrawActivity)", isFront+"");
         dot.setCaption(isFront); // 캡션 지정
+        dot.setLocation(isFront); // 점위치 지정
 
         saveBtn.setOnClickListener(new View.OnClickListener() { //클릭하는 경우
             @Override
