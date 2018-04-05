@@ -2,9 +2,7 @@ package com.example.jekan.fyp_test.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.UrlQuerySanitizer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -182,8 +180,11 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                     layoutUserLogout.setVisibility(View.GONE);
                     layoutUserLogin.setVisibility(View.VISIBLE);
                 }else{
-                    layoutUserLogout.setVisibility(View.VISIBLE);
-                    layoutUserLogin.setVisibility(View.GONE);
+                    // 테스트를 위해 로그인 했다 가정함
+                    //layoutUserLogout.setVisibility(View.VISIBLE);
+                    //layoutUserLogin.setVisibility(View.GONE);
+                    layoutUserLogout.setVisibility(View.GONE);
+                    layoutUserLogin.setVisibility(View.VISIBLE);
                 }
 
                 if (isSlidingPageOpen) {// 열려 있으면

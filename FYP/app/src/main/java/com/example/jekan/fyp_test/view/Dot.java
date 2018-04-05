@@ -85,7 +85,7 @@ public class Dot extends View{
             // 테스트용 점 위치
             pointList.add(new DotPoint(443, 691, frontCaptions[0])); //어깨
             pointList.add(new DotPoint(447, 750, frontCaptions[1])); //겨드랑이
-            pointList.add(new DotPoint(452, 777, frontCaptions[2])); //가슴
+            pointList.add(new DotPoint(448, 777, frontCaptions[2])); //가슴
             pointList.add(new DotPoint(265, 875, frontCaptions[3])); //손목
             pointList.add(new DotPoint(462, 878, frontCaptions[4])); //허리
             pointList.add(new DotPoint(433, 992, frontCaptions[5])); //엉덩이
@@ -283,9 +283,9 @@ public class Dot extends View{
         if(isFront) {
             pointList.add(new DotPoint(443, 691, frontCaptions[0])); //어깨
             pointList.add(new DotPoint(447, 750, frontCaptions[1])); //겨드랑이
-            pointList.add(new DotPoint(452, 777, frontCaptions[2])); //가슴
+            pointList.add(new DotPoint(448, 777, frontCaptions[2])); //가슴
             pointList.add(new DotPoint(265, 875, frontCaptions[3])); //손목
-            pointList.add(new DotPoint(462, 878, frontCaptions[4])); //허리
+            pointList.add(new DotPoint(460, 878, frontCaptions[4])); //허리
             pointList.add(new DotPoint(433, 992, frontCaptions[5])); //엉덩이
             pointList.add(new DotPoint(533, 1008, frontCaptions[6])); //사타구니
             pointList.add(new DotPoint(506, 1340,frontCaptions[7])); //발목
@@ -295,8 +295,8 @@ public class Dot extends View{
             pointList.set(0, new DotPoint(594, 538, sideCaptions[0])); //머리
             pointList.set(1, new DotPoint(487, 776, sideCaptions[1])); //옆가슴
             pointList.set(2, new DotPoint(617, 773, sideCaptions[2])); //등
-            pointList.set(3, new DotPoint(503, 867, sideCaptions[3])); //앞허리
-            pointList.set(4, new DotPoint(602, 868, sideCaptions[4])); //뒷허리
+            pointList.set(3, new DotPoint(500, 867, sideCaptions[3])); //앞허리
+            pointList.set(4, new DotPoint(608, 870, sideCaptions[4])); //뒷허리
             pointList.set(5, new DotPoint(503, 977, sideCaptions[5])); //앞엉덩이
             pointList.set(6, new DotPoint(636, 983, sideCaptions[6])); //뒷엉덩이
             pointList.set(7, new DotPoint(603, 1417,sideCaptions[7])); //발바닥

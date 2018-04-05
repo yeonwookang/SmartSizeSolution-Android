@@ -35,88 +35,100 @@ public class CalcSize {
     }
 
     //1. 상체길이(어깨 - 앞뒷허리(중간)) ....? -> 어깨 - 허리까지의 길이 -->얘참 애매해! 목점을 알아야 할듯...? -> 목점추가! (목-허리까) ->목에서 골반
-    public float getTopLength(){/*
-        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
-        return getStraightDistanceHeight(fPoints.get(0), middlePoint)*ratio;*/
-        //return getStraightDistanceHeight(fPoints.get(0), fPoints.get(4))*ratio;
+    public float getTopLength(){
         return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(8), fPoints.get(9))*ratio);
     }
 
     //2. 하체길이(앞뒷허리(중간)-발바닥) ->허리- 발바닥까지의 길이 -> 허리 - 발목까지의 길이(발바닥에서 발목으로 변경) - 골반에서 발목으로 변경 - 다시 허리에서 발목
-    public float getLegLength(){/*
-        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4), "허리중간점");
-        return getStraightDistanceHeight(middlePoint, sPoints.get(7))*ratio;*/
-        //return getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio;
-        return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio);
+    public float getLegLength(){return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(4), fPoints.get(7))*ratio);
     }
 
     //3. 어깨너비(어깨 - 사타구니의 직선거리)*2
     public float getShoulderWidth() {
-        //return getStraightDistanceWidth(fPoints.get(0), fPoints.get(6))*2*ratio;
         return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(0), fPoints.get(6))*2*ratio);
     }
 
-    //4. 가슴너비
-    public float getChestWidth(){
-        //******* 2018.04.04 강연우 수정 *******//
+    //4. 가슴너비 (가슴-사타구니&목-사타구니&옆가슴-등 논문 공식)
+    public double getChestWidth(){
         // Python 연구 프로그램에서 사용한 가슴둘레 수식 사용 (논문 참고)
-        // 총 가슴 둘레의 1/4값만 구한 다음 * 2
+        // 정면 가슴 너비
+        double frontChestWidth = getStraightDistanceWidth(fPoints.get(2), fPoints.get(6)) * 2;
+        // 정면 가슴 너비 보정된 값 = 정면 목너비 * 1.2
+        double frontNeckWidth_corrector = getStraightDistanceWidth(fPoints.get(8), fPoints.get(6)) * 2 * 1.2;
+        // C의 밑변 길이 = (정면 가슴 너비 - (정면 목너비 * 1.2)) / 2
+        double c = (frontChestWidth - frontNeckWidth_corrector) / 2.0;
+        // 측면 가슴 너비 = 측면 가슴 - (c * 2)
+        double sideChestWidth = getStraightDistanceWidth(sPoints.get(1), sPoints.get(2)) - (c * 2);
+        // C의 빗변 길이 (피타고라스)
+        double c_rainside = sqrt(pow(c, 2) + pow(c, 2));
 
-        // 정면 가슴 너비의 절반 = 겨드랑이 - 사타구니
-        // 측면 가슴 너비의 절반 = 옆가슴 - 등 / 2
-        // 정면 목 너비의 절반 = 목점 - 사타구니
+        // 최종 가슴 둘레
+        double finalChestCircum = (frontNeckWidth_corrector * 2) + (sideChestWidth * 2) + (c_rainside * 4);
+        // 최종 가슴 너비
+        double finalChestWidth = (finalChestCircum / 2.0) * ratio;
 
-        // C = 정면 가슴 너비의 절반 - 정면 목 너비의 절반
-
-        //return getPointDistance(fPoints.get(2), fPoints.get(6))*2;
-        //return getStraightDistanceWidth(fPoints.get(2), fPoints.get(6))*2*ratio;
-        return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(2), fPoints.get(6))*2*ratio);
+        return getDoubleFirstNum(finalChestWidth);
     }
 
-    //**************얘 고치기*****************//
-    //5. 암홀너비(어깨 - 겨드랑이) -> 직선과 점사이의 거리로 해야할듯...
+    //5. 암홀너비 (어깨-겨드랑이 원의 둘레 공식)
     public double getArmHoleLength(){
-        //******* 2018.04.04 강연우 수정 *******//
-        // 원의 둘레 공식 사용
         // 암홀의 둘레 = 2 * PI * 반지름
         // 따라서, 암홀의 단면 너비 = (암홀의 둘레) / 2
-        // 최종 암홀의 단면 너비 = (PI * 반지름) * ratio
-
         double radius = getStraightDistanceHeight(fPoints.get(0),fPoints.get(1)) / 2.0;
         double armholeWidth = (radius * PI) * ratio;
 
-        //return getPointDistance(fPoints.get(0),fPoints.get(1))*ratio;
-        //return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(0),fPoints.get(1))*ratio);
         return getDoubleFirstNum(armholeWidth);
     }
 
-    //**************얘 고치기***************** or 가이드 라인 더 자세하게
-    //6. 소매길이(어깨 - 손목) *여기가 문제네! 어깨랑 손목은 항상 같은 방향이어야함..대박사건
+    //6. 소매길이(어깨 - 손목) *여기가 문제네! 어깨랑 손목은 항상 같은 방향이어야함..대박사건 + 가이드 필요
     public float getArmLength() {
-        //return getPointDistance(fPoints.get(0), fPoints.get(3))*ratio;
         return getFloatFirstNum(getPointDistance(fPoints.get(0), fPoints.get(3))*ratio);
     }
 
-    //7. 허리너비(허리 - 사타구니의 직선거리)*2
+    //7. 허리너비 (허리-사타구니&목-사타구니&앞허리-뒷허리 논문 공식)
     public double getWaistWidth(){
+        // 정면 가슴 너비
+        double frontWaistWidth = getStraightDistanceWidth(fPoints.get(4), fPoints.get(6)) * 2;
+        // 정면 허리 너비 보정된 값 = 정면 목너비 * 1.2
+        double frontNeckWidth_corrector = getStraightDistanceWidth(fPoints.get(8), fPoints.get(6)) * 2 * 1.2;
+        // C의 밑변 길이 = (정면 허리 너비 - (정면 목너비 * 1.2)) / 2
+        double c = (frontWaistWidth - frontNeckWidth_corrector) / 2.0;
+        // 측면 허리 너비 = 측면 허리 - (c * 2)
+        double sideChestWidth = getStraightDistanceWidth(sPoints.get(3), sPoints.get(4)) - (c * 2);
+        // C의 빗변 길이 (피타고라스)
+        double c_rainside = sqrt(pow(c, 2) + pow(c, 2));
 
-        double waist = getStraightDistanceWidth(fPoints.get(4), fPoints.get(6)) + getStraightDistanceWidth(sPoints.get(3), sPoints.get(4));
+        // 최종 허리 둘레
+        double finalWaistCircum = (frontNeckWidth_corrector * 2) + (sideChestWidth * 2) + (c_rainside * 4);
+        // 최종 허리 너비
+        double finalWaistWidth = (finalWaistCircum / 2.0) * ratio;
 
-        //return getDoubleFirstNum(waistWidth);
-        return getDoubleFirstNum(waist);
+        return getDoubleFirstNum(finalWaistWidth);
     }
 
-    //8. 엉덩이너비(엉덩이 - 사타구니의 직선거리)*2
-    public float getHipWidth(){
-        //return getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*2*ratio;
-        return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*2*ratio);
+    //8. 엉덩이너비(엉덩이-사타구니&목-사타구니&앞엉덩이-뒷엉덩이 논문 공식)
+    public double getHipWidth(){
+        // 정면 엉덩이 너비
+        double frontHipWidth = getStraightDistanceWidth(fPoints.get(5), fPoints.get(6)) * 2;
+        // 정면 엉덩이 너비 보정된 값 = 정면 목너비 * 1.2
+        double frontNeckWidth_corrector = getStraightDistanceWidth(fPoints.get(8), fPoints.get(6)) * 2 * 1.2;
+        // C의 밑변 길이 = (정면 엉덩이 너비 - (정면 목너비 * 1.2)) / 2
+        double c = (frontHipWidth - frontNeckWidth_corrector) / 2.0;
+        // 측면 엉덩이 너비 = 측면 엉덩이 - (c * 2)
+        double sideHipWidth = getStraightDistanceWidth(sPoints.get(5), sPoints.get(6)) - (c * 2);
+        // C의 빗변 길이 (피타고라스)
+        double c_rainside = sqrt(pow(c, 2) + pow(c, 2));
+
+        // 최종 엉덩이 둘레
+        double finalHipCircum = (frontNeckWidth_corrector * 2) + (sideHipWidth * 2) + (c_rainside * 4);
+        // 최종 엉덩이 너비
+        double finalHipWidth = (finalHipCircum / 2.0) * ratio;
+
+        return getDoubleFirstNum(finalHipWidth);
     }
 
-    //9. 허벅지너비(엉덩이 - 사타구니) ***********여기도 문제가 있어 사실...
+    //9. 허벅지너비(엉덩이-사타구니 원의 둘레 공식)
     public float getThighWidth(){
-       // return getStraightDistanceWidth(fPoints.get(5), fPoints.get(6))*ratio;
-        //************04월 05일 연우 수정**********//
-
         double radius = getStraightDistanceWidth(fPoints.get(5),fPoints.get(6)) / 2.0;
         double thighWidth = (radius * PI) * ratio;
 
@@ -124,14 +136,13 @@ public class CalcSize {
     }
 
     //10. 밑위길이(앞뒷허리(중간) - 사타구니) -> 골반과 사타구니 거리
-    public float getCrotchLength(){/*
-        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4),"허리중간점");
-        return getStraightDistanceHeight(middlePoint, fPoints.get(6))*ratio;*/
-       // return getStraightDistanceHeight(fPoints.get(4), fPoints.get(6))*ratio; //급조
+    public float getCrotchLength(){
         return getFloatFirstNum(getStraightDistanceHeight(fPoints.get(9), fPoints.get(6))*ratio);
-        /*
-        DotPoint middlePoint = getMiddlePoint(sPoints.get(3), sPoints.get(4),"허리중간점");
-        return getFloatFirstNum(getStraightDistanceHeight(middlePoint, fPoints.get(6))*ratio);*/
+    }
+
+    //11. 목너비 (계산에 필요)
+    public float getNeckLength() {
+        return getFloatFirstNum(getStraightDistanceWidth(fPoints.get(8), fPoints.get(6)) * 2 * ratio);
     }
 
     //직선거리 - 가로
