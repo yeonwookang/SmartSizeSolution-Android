@@ -5,19 +5,6 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_below="@id/view_user_state"
-        android:background="@drawable/img_slidebar_shd"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_above="@id/layout_menu"
-        android:background="@drawable/img_underbar_shd">
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,26 +38,30 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/img_user_side"
-            android:visibility="gone"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/img_user_side"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/txt_side_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SELECT YOUR SIDE IMAGE"
-                android:textSize="30sp"
-                android:letterSpacing="0.15"
-                android:textColor="#7272BA"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:visibility="gone"/>
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:letterSpacing="0.15"
+                android:text="SELECT YOUR SIDE IMAGE"
+                android:textColor="#7272BA"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -84,7 +75,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#455975">
+        android:background="#455975"
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
