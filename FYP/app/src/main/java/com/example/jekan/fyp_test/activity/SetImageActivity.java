@@ -9,11 +9,15 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
@@ -22,13 +26,25 @@ import com.example.jekan.fyp_test.RotateTransformation;
 import com.example.jekan.fyp_test.view.CalcSize;
 import com.example.jekan.fyp_test.view.DotPoint;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by jekan on 2018-03-13.
  */
 
-public class SetImageActivity extends AppCompatActivity {
+public class SetImageActivity extends AppCompatActivity implements  View.OnTouchListener{
 
     private boolean isFront = true;
 
@@ -40,11 +56,18 @@ public class SetImageActivity extends AppCompatActivity {
     private String[] photoPathArr = new String[2];
     private int rotate = 0;
     private int[] rotateArr= new int[2];
+    private RelativeLayout layoutUserFrontState, layoutUserSideState;
+    private ViewFlipper viewFlipper;
+    float xAtDown, xAtUp; //x점 이벤트- 눌렀을 때/땠을 때
+    int count = 0; //첫, 끝 화면을 알리기 위한 변수
+    private String userId;
 
     static final int REQUEST_PICK_FROM_ALBUM = 0;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_SEND_DATA=3;
     static final int REQUEST_DRAW_DOT=4;
+
+    HashMap<String, String> map = new HashMap<>();
 
     ArrayList<DotPoint> frontDots, sideDots;
     CalcSize calcSize;
@@ -58,6 +81,15 @@ public class SetImageActivity extends AppCompatActivity {
         txt_front_default.setTypeface(typeface);
         txt_side_default = (TextView)findViewById(R.id.txt_side_default);
         txt_side_default.setTypeface(typeface);
+        userId = getIntent().getExtras().getString("user_id");
+
+/*
+        viewFlipper = (ViewFlipper)findViewById(R.id.flipper);
+        viewFlipper.setOnTouchListener(this); //얘쓸라면 코드 다 갈아엎어야함 ㅠㅠ
+        layoutUserFrontState = (RelativeLayout)findViewById(R.id.layout_user_front_state);
+        layoutUserSideState = (RelativeLayout)findViewById(R.id.layout_user_side_state);
+*/
+
         initState();
     }
 
@@ -71,15 +103,19 @@ public class SetImageActivity extends AppCompatActivity {
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_pink));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_white));
                 if(photoPathArr[0]==null)
-                     txt_front_default.setVisibility(View.VISIBLE);
+                    txt_front_default.setVisibility(View.VISIBLE);
                 else
                     txt_front_default.setVisibility(View.INVISIBLE);
 
+
                 imgUserFront.setVisibility(View.VISIBLE);
+                // layoutUserSideState.setVisibility(View.INVISIBLE);
+
                 imgUserSide.setVisibility(View.INVISIBLE);
                 txt_side_default.setVisibility(View.INVISIBLE);
             }
         });
+
         btnSide = (Button)findViewById(R.id.btn_user_side);
         btnSide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +123,17 @@ public class SetImageActivity extends AppCompatActivity {
                 isFront=false;
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_white));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_pink));
-                imgUserFront.setVisibility(View.INVISIBLE);
-                txt_front_default.setVisibility(View.INVISIBLE);
-                imgUserSide.setVisibility(View.VISIBLE);
 
                 if(photoPathArr[1]==null)
                     txt_side_default.setVisibility(View.VISIBLE);
                 else
                     txt_side_default.setVisibility(View.INVISIBLE);
+
+                imgUserSide.setVisibility(View.VISIBLE);
+
+                imgUserFront.setVisibility(View.INVISIBLE);
+                txt_front_default.setVisibility(View.INVISIBLE);
+
 
             }
         });
@@ -175,6 +214,7 @@ public class SetImageActivity extends AppCompatActivity {
                             //치수 값이 잘 나오는지 테스트
                             calcSize = new CalcSize(frontDots, sideDots,user_height);
                             float pixel = calcSize.clacHeightPixel();
+
                             float topLength = calcSize.getTopLength(); //상체길이 45
                             float legLength = calcSize.getLegLength(); //하체길이 88
                             float armLength = calcSize.getArmLength(); //소매길이 48
@@ -184,18 +224,33 @@ public class SetImageActivity extends AppCompatActivity {
                             double waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
                             double thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
                             double hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
-                            float crotcLength = calcSize.getCrotchLength(); //밑위 길이 15
+                            float crotchLength = calcSize.getCrotchLength(); //밑위 길이 15
                             float neckLength = calcSize.getNeckLength(); //목너비 19
 
-                            Toast.makeText(getApplicationContext(), "[사용자 정보]\n상체길이: "+topLength
+                            map.put("id", userId);
+                            map.put("top",String.valueOf(topLength));
+                            map.put("shoulder",String.valueOf(shoulderLength));
+                            map.put("chest", String.valueOf(chestLength));
+                            map.put("armhole",String.valueOf(armHoleLength));
+                            map.put("arm", String.valueOf(armLength));
+                            map.put("bottom", String.valueOf(legLength));
+                            map.put("waist", String.valueOf(waistLength));
+                            map.put("hip", String.valueOf(hipLength));
+                            map.put("thigh",String.valueOf(thighLength));
+                            map.put("crotch",String.valueOf(crotchLength));
+                            map.put("height", String.valueOf(user_height));
+
+
+
+                            /*Toast.makeText(getApplicationContext(), "[사용자 정보]\n상체길이: "+topLength
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
-                                    +"\n밑위길이: "+crotcLength + "\n목너비: " + neckLength,Toast.LENGTH_LONG).show();
-
+                                    +"\n밑위길이: "+crotchLength + "\n목너비: " + neckLength,Toast.LENGTH_LONG).show();
+*/
                             Log.d("Size","[사용자 정보]\n상체길이: "+topLength
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
-                                    +"\n밑위길이: "+crotcLength + "\n목너비: " + neckLength);
+                                    +"\n밑위길이: "+crotchLength + "\n목너비: " + neckLength);
 
 
                            /* Intent intent = new Intent(SetImageActivity.this, MainActivity.class);A
@@ -203,6 +258,12 @@ public class SetImageActivity extends AppCompatActivity {
                             intent.putExtra("fPoints", frontDots);
                             intent.putExtra("sPoints", sideDots);
                             startActivity(intent);*/
+
+                            new Thread(){
+                                public void run(){
+                                    sendUserSize(map,"http://www.smartsizeservice.xyz/index.php?action=editinfo");
+                                }
+                            }.start();
                         }
                        // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
                         // startActivityForResult(intent, REQUEST_SEND_DATA);
@@ -214,6 +275,7 @@ public class SetImageActivity extends AppCompatActivity {
 
         imgUserFront = (ImageView)findViewById(R.id.img_user_front);
         imgUserSide = (ImageView)findViewById(R.id.img_user_side);
+
         Button btnClose = (Button)findViewById(R.id.btn_close_set_Image);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,4 +371,107 @@ public class SetImageActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+       /* if(v != viewFlipper) return false;
+
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            xAtDown = event.getX();
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            xAtUp = event.getX();
+            if(xAtDown>xAtUp){ //좌에서 우로 클릭
+                viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
+                viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
+                count++;
+                if(count<3)
+                    viewFlipper.showNext();
+                else
+                    count--;
+            }
+            else  if(xAtDown<xAtUp){ //우에서 좌로
+                viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
+                viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
+                count--;
+                if(count>-1)
+                    viewFlipper.showPrevious();
+                else
+                    count++;
+            }
+        }
+        return false;*/
+       return true;
+    }
+
+    //사용자의 치수를 웹으로 보내자
+    private void sendUserSize(HashMap<String, String> map, String addr){
+        String response="";
+        try{
+            URL url = new URL(addr);
+            HttpURLConnection urlCon = (HttpURLConnection)url.openConnection();
+            urlCon.setConnectTimeout(10000);
+            urlCon.setUseCaches(false);
+            urlCon.setRequestMethod("POST");
+            urlCon.setDoInput(true);
+            urlCon.setDoOutput(true);
+
+            //웹 서버로 보낼 매개변수가 있는 경우
+            if(map != null){
+                OutputStream os = urlCon.getOutputStream();
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+                bw.write(getPostString(map)); //매개변수 전송
+                bw.flush();
+                bw.close();
+                os.close();
+            }
+            if(urlCon.getResponseCode() == HttpURLConnection.HTTP_OK){
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
+
+                while((line = br.readLine())!=null)
+                    response += line;
+            }
+            urlCon.disconnect();
+        }catch (MalformedURLException me) {
+            me.printStackTrace();
+          //  return me.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+          //  return e.toString();
+        }
+      //  return response;
+    }
+
+    //매개 변수를 URL에 붙이는 함수
+    private String getPostString(HashMap<String, String> map){
+        StringBuilder result = new StringBuilder();
+        boolean first = true; // 첫번째 매개변수
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (first)
+                first = false;
+            else // 첫 번째 매개변수가 아닌 경우엔 앞에 &를 붙임
+                result.append("&");
+
+            try { // UTF-8로 주소에 키와 값을 붙임
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+              //  result.append(URLEncoder.encode(String.valueOf(entry.getValue())), "");
+               // result.append(URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8"));
+            } catch (UnsupportedEncodingException ue) {
+                ue.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result.toString();
+    }
 }
+
+
+
+
+
+
+
+

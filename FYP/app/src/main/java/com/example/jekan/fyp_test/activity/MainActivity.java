@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     public android.webkit.CookieManager cookieManager;
     public String sss_domain="http://52.79.137.54";*/ // HttpClient -> HttpURLConnection으로 변경하자
     CookieManager cookieManager;
-    private  String userId = null;
+    private static String userId = null;
 
 
     // 슬라이딩 페이지
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         cookieManager.setAcceptCookie(true);
         layoutUserLogin = (LinearLayout)findViewById(R.id.layout_when_user_login);
         layoutUserLogout = (LinearLayout)findViewById(R.id.layout_when_user_logout);
-        layoutfadeBg = (LinearLayout) findViewById(R.id.fadebg);
+        layoutfadeBg = (LinearLayout)findViewById(R.id.layout_fadebg);
 
        /* CookieSyncManager.createInstance(this);
         cookieManager = android.webkit.CookieManager.getInstance();
@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 break;
             case R.id.autoSizeBtn:
                 Intent intent = new Intent(MainActivity.this, SetImageActivity.class); // 현재 액티비티, 전환할 액티비티
+                intent.putExtra("user_id", userId);
                 startActivity(intent);
                 break;
             case R.id.signInBtn:
