@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                         Toast.makeText(getApplicationContext(), getUserId()+"-->onPageFinished getId", Toast.LENGTH_SHORT).show();
                     }else{
                         setUserId("null");
+                        Toast.makeText(getApplicationContext(), getUserId()+"-->onPageFinished getId", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -162,17 +163,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         }
 
         return value;
-    }
-
-    //메인에 다시가는걸 어떻게알까..??? - 고민
-    public void calcurateValue(){
-        Intent intent = getIntent();
-        ArrayList<DotPoint> fPoints = (ArrayList<DotPoint>) intent.getSerializableExtra("fPoints");
-        ArrayList<DotPoint> sPoints = (ArrayList<DotPoint>) intent.getSerializableExtra("sPoints");
-        String actual_height = intent.getExtras().getString("actual_height");
-        float user_height = (float)Integer.parseInt(actual_height);
-        CalcSize calcSize = new CalcSize(fPoints, sPoints, user_height);
-        Toast.makeText(getApplicationContext(), calcSize.clacHeightPixel()+"픽셀값이 나와야겠찌", Toast.LENGTH_SHORT).show();
     }
 
 
