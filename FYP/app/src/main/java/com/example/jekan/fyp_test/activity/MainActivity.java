@@ -2,9 +2,7 @@ package com.example.jekan.fyp_test.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.UrlQuerySanitizer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -47,11 +45,14 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     private LinearLayout slidingPage;
     private LinearLayout layoutUserLogin;
     private LinearLayout layoutUserLogout;
+    private LinearLayout layoutfadeBg;
     private boolean isSlidingPageOpen = false; // 플래그
 
     // 애니메이션
     private Animation translateUpAnim; // 위쪽으로 움직이기
     private Animation translateDownAnim; // 아래쪽으로 움직이기
+    private Animation fadeInAnim; // 점점 선명하게 보여주는 애니메이션 객체
+    private Animation fadeOutAnim; // 점점 사라지도록 하는 애니메이션 객체
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         cookieManager.setAcceptCookie(true);
         layoutUserLogin = (LinearLayout)findViewById(R.id.layout_when_user_login);
         layoutUserLogout = (LinearLayout)findViewById(R.id.layout_when_user_logout);
-
+        layoutfadeBg = (LinearLayout) findViewById(R.id.fadebg);
 
        /* CookieSyncManager.createInstance(this);
         cookieManager = android.webkit.CookieManager.getInstance();
@@ -172,15 +173,21 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                     layoutUserLogout.setVisibility(View.GONE);
                     layoutUserLogin.setVisibility(View.VISIBLE);
                 }else{
-                    layoutUserLogout.setVisibility(View.VISIBLE);
-                    layoutUserLogin.setVisibility(View.GONE);
+                    // 테스트를 위해 로그인 했다 가정함
+                    //layoutUserLogout.setVisibility(View.VISIBLE);
+                    //layoutUserLogin.setVisibility(View.GONE);
+                    layoutUserLogout.setVisibility(View.GONE);
+                    layoutUserLogin.setVisibility(View.VISIBLE);
                 }
 
                 if (isSlidingPageOpen) {// 열려 있으면
                     slidingPage.startAnimation(translateDownAnim); //아래쪽으로 애니메이션
+                    layoutfadeBg.startAnimation(fadeOutAnim); // 나타남
                 } else { // 닫혀 있으면
                     slidingPage.setVisibility(View.VISIBLE); // 보이도록 한 후
+                    layoutfadeBg.setVisibility(View.VISIBLE);
                     slidingPage.startAnimation(translateUpAnim);  // 위쪽으로 애니메이션
+                    layoutfadeBg.startAnimation(fadeInAnim);
                 }
             }
 
@@ -192,6 +199,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         // 애니메이션
         translateUpAnim = AnimationUtils.loadAnimation(this, R.anim.translate_up); // 위쪽으로 이동
         translateDownAnim = AnimationUtils.loadAnimation(this, R.anim.translate_down); // 아래쪽으로 이동
+        fadeInAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        fadeOutAnim = AnimationUtils.loadAnimation(this, R.anim.fade_out);
 
         // 슬라이딩 애니메이션을 감시할 리스너
         SlidingPageAnimationListener animListener = new SlidingPageAnimationListener();
@@ -263,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         public void onAnimationEnd(Animation animation) {
             if (isSlidingPageOpen) {
                 slidingPage.setVisibility(View.INVISIBLE);
+                layoutfadeBg.setVisibility(View.INVISIBLE);
                 isSlidingPageOpen = false;
             } else {
                 isSlidingPageOpen = true;

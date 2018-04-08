@@ -9,10 +9,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.jekan.fyp_test.R;
 
 import java.util.ArrayList;
 
@@ -43,7 +39,7 @@ public class Dot extends View{
     private final int MAXDOT = 10;
 
     // 좌표 리스트
-    private ArrayList<DotPoint> pointList = new ArrayList<>(); //Point -> DotPoint
+    private ArrayList<DotPoint> pointList = new ArrayList<DotPoint>(); //Point -> DotPoint
 
     // 점 캡션
     // 배열 점 저장하는 순서 중요함 (정면: [0]어깨, [1]겨드랑이, [2]가슴, [3]손목, [4]허리, [5]엉덩이, [6]사타구니, [7]발목, [8]목, [9]골반)
@@ -70,8 +66,11 @@ public class Dot extends View{
         myPaint.setAntiAlias(true);
         myPaint.setTextSize(30);
 
-
+        // 해당 코드로 점 위치 변경이 되지 않아
+        // 임의의 테스트용 점 위치 지정 함수 setLocation(boolean) 생성
+        // 해당 함수는 DrawActivity에서 사용함
         if(isFront){
+            /*
             pointList.add(new DotPoint(x + 300, y + 600, frontCaptions[0])); //어깨
             pointList.add(new DotPoint(x + 600, y + 600, frontCaptions[1])); //겨드랑이
             pointList.add(new DotPoint(x + 700, y + 600, frontCaptions[2])); //가슴
@@ -82,8 +81,23 @@ public class Dot extends View{
             pointList.add(new DotPoint(x + 400, y + 1200,frontCaptions[7])); //발목
             pointList.add(new DotPoint(x + 400, y + 500, frontCaptions[8])); //목
             pointList.add(new DotPoint(x + 400, y + 950, frontCaptions[9]));//골반
+            */
+            // 테스트용 점 위치
+            pointList.add(new DotPoint(443, 691, frontCaptions[0])); //어깨
+            pointList.add(new DotPoint(447, 750, frontCaptions[1])); //겨드랑이
+            pointList.add(new DotPoint(448, 777, frontCaptions[2])); //가슴
+            pointList.add(new DotPoint(265, 875, frontCaptions[3])); //손목
+            pointList.add(new DotPoint(462, 878, frontCaptions[4])); //허리
+            pointList.add(new DotPoint(433, 992, frontCaptions[5])); //엉덩이
+            pointList.add(new DotPoint(533, 1008, frontCaptions[6])); //사타구니
+            pointList.add(new DotPoint(506, 1340,frontCaptions[7])); //발목
+            pointList.add(new DotPoint(499, 676, frontCaptions[8])); //목
+            pointList.add(new DotPoint(440, 921, frontCaptions[9]));//골반
+
+            invalidate();
 
         }else{
+            /*
             pointList.add(new DotPoint(x + 600, y + 200, sideCaptions[0])); //머리
             pointList.add(new DotPoint(x + 400, y + 500, sideCaptions[1])); //옆가슴
             pointList.add(new DotPoint(x + 700, y + 500, sideCaptions[2])); //등
@@ -94,6 +108,21 @@ public class Dot extends View{
             pointList.add(new DotPoint(x + 500, y + 1300,sideCaptions[7])); //발바닥
             pointList.add(new DotPoint(x + 700, y + 900, sideCaptions[8])); //앞골반
             pointList.add(new DotPoint(x + 800, y + 900, sideCaptions[9])); //뒷골반
+            */
+            // 테스트용 점 위치
+            pointList.add(new DotPoint(594, 538, sideCaptions[0])); //머리
+            pointList.add(new DotPoint(487, 776, sideCaptions[1])); //옆가슴
+            pointList.add(new DotPoint(617, 773, sideCaptions[2])); //등
+            pointList.add(new DotPoint(503, 867, sideCaptions[3])); //앞허리
+            pointList.add(new DotPoint(602, 868, sideCaptions[4])); //뒷허리
+            pointList.add(new DotPoint(503, 977, sideCaptions[5])); //앞엉덩이
+            pointList.add(new DotPoint(636, 983, sideCaptions[6])); //뒷엉덩이
+            pointList.add(new DotPoint(603, 1417,sideCaptions[7])); //발바닥
+            pointList.add(new DotPoint(500, 906, sideCaptions[8])); //앞골반
+            pointList.add(new DotPoint(602, 903, sideCaptions[9])); //뒷골반
+
+            invalidate();
+
         }
 
 /*
@@ -111,6 +140,7 @@ public class Dot extends View{
 
 
     }
+
 
     public boolean getIsFront(){
         return isFront;
@@ -187,13 +217,13 @@ public class Dot extends View{
             if(i == index) {
                 float selected = (float) (RADIUS / 2.5); // 선택된 점 테두리 굵기 조정
                 // 선택된 점에 해당하면 이중 점
-                myPaint.setColor(Color.rgb(117, 77, 193));
+                myPaint.setColor(Color.rgb(50, 67, 91));
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
 
                 myPaint.setColor(Color.WHITE);
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS - selected, myPaint); // 점 그리기
             }  else {
-                myPaint.setColor(Color.rgb(117, 77, 193)); // 나머진 보라색
+                myPaint.setColor(Color.rgb(50, 67, 91)); // 나머진 네이비
                 canvas.drawCircle(pointList.get(i).getPointX(), pointList.get(i).getPointY(), RADIUS, myPaint); // 점 그리기
             }
 
@@ -235,7 +265,6 @@ public class Dot extends View{
     }
 
 
-
     // 점 크기 지정
     public void setRadius(int radius) {
         this.RADIUS = radius;
@@ -248,6 +277,35 @@ public class Dot extends View{
         invalidate();
     }
 
+    // 점 위치 지정 (테스트용)
+    public void setLocation(boolean isFront) {
+        this.isFront = isFront;
+        if(isFront) {
+            pointList.add(new DotPoint(443, 691, frontCaptions[0])); //어깨
+            pointList.add(new DotPoint(447, 750, frontCaptions[1])); //겨드랑이
+            pointList.add(new DotPoint(448, 777, frontCaptions[2])); //가슴
+            pointList.add(new DotPoint(265, 875, frontCaptions[3])); //손목
+            pointList.add(new DotPoint(460, 878, frontCaptions[4])); //허리
+            pointList.add(new DotPoint(433, 992, frontCaptions[5])); //엉덩이
+            pointList.add(new DotPoint(533, 1008, frontCaptions[6])); //사타구니
+            pointList.add(new DotPoint(506, 1340,frontCaptions[7])); //발목
+            pointList.add(new DotPoint(499, 676, frontCaptions[8])); //목
+            pointList.add(new DotPoint(440, 921, frontCaptions[9]));//골반
+        } else {
+            pointList.set(0, new DotPoint(594, 538, sideCaptions[0])); //머리
+            pointList.set(1, new DotPoint(487, 776, sideCaptions[1])); //옆가슴
+            pointList.set(2, new DotPoint(617, 773, sideCaptions[2])); //등
+            pointList.set(3, new DotPoint(500, 867, sideCaptions[3])); //앞허리
+            pointList.set(4, new DotPoint(608, 870, sideCaptions[4])); //뒷허리
+            pointList.set(5, new DotPoint(503, 977, sideCaptions[5])); //앞엉덩이
+            pointList.set(6, new DotPoint(636, 983, sideCaptions[6])); //뒷엉덩이
+            pointList.set(7, new DotPoint(603, 1417,sideCaptions[7])); //발바닥
+            pointList.set(8, new DotPoint(500, 906, sideCaptions[8])); //앞골반
+            pointList.set(9, new DotPoint(602, 903, sideCaptions[9])); //뒷골반
+        }
+
+        invalidate();
+    }
 
     // 점 좌표 반환
     public float getX() {

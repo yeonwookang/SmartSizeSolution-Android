@@ -7,17 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
@@ -183,17 +179,23 @@ public class SetImageActivity extends AppCompatActivity {
                             float legLength = calcSize.getLegLength(); //하체길이 88
                             float armLength = calcSize.getArmLength(); //소매길이 48
                             float shoulderLength = calcSize.getShoulderWidth(); //어깨너비 27
-                            float chestLength = calcSize.getChestWidth(); //가슴너비 둘레 91, 길이 29
-                            float armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
-                            float waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
-                            float thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
-                            float hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
+                            double chestLength = calcSize.getChestWidth(); //가슴너비 둘레 91, 길이 29
+                            double armHoleLength = calcSize.getArmHoleLength(); //암홀너비 길이 10 둘레 31
+                            double waistLength = calcSize.getWaistWidth();  //허리너비 둘레 80, 길이 30
+                            double thighLength = calcSize.getThighWidth(); //허벅지 너비 둘레 53 길이 17
+                            double hipLength = calcSize.getHipWidth(); //엉덩이 너비 둘레 97
                             float crotcLength = calcSize.getCrotchLength(); //밑위 길이 15
+                            float neckLength = calcSize.getNeckLength(); //목너비 19
 
                             Toast.makeText(getApplicationContext(), "[사용자 정보]\n상체길이: "+topLength
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
-                                    +"\n밑위길이: "+crotcLength,Toast.LENGTH_LONG).show();
+                                    +"\n밑위길이: "+crotcLength + "\n목너비: " + neckLength,Toast.LENGTH_LONG).show();
+
+                            Log.d("Size","[사용자 정보]\n상체길이: "+topLength
+                                    +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
+                                    +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
+                                    +"\n밑위길이: "+crotcLength + "\n목너비: " + neckLength);
 
 
                            /* Intent intent = new Intent(SetImageActivity.this, MainActivity.class);A
