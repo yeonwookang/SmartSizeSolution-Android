@@ -404,47 +404,51 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
 
     //사용자의 치수를 웹으로 보내자
     private void sendUserSize(HashMap<String, String> map, String addr){
-        String response="";
-        try{
-            URL url = new URL(addr);
-            HttpURLConnection urlCon = (HttpURLConnection)url.openConnection();
-            urlCon.setConnectTimeout(10000);
-            urlCon.setUseCaches(false);
-            urlCon.setRequestMethod("POST");
-            urlCon.setDoInput(true);
-            urlCon.setDoOutput(true);
+        String response = ""; // DB 서버의 응답을 담는 변수
 
-            //웹 서버로 보낼 매개변수가 있는 경우
-            if(map != null){
-                OutputStream os = urlCon.getOutputStream();
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
-                bw.write(getPostString(map)); //매개변수 전송
+        try {
+            URL url = new URL(addr);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // 해당 URL에 연결
+
+            conn.setConnectTimeout(10000); // 타임아웃: 10초
+            conn.setUseCaches(false); // 캐시 사용 안 함
+            conn.setRequestMethod("POST"); // POST로 연결
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            if (map != null) { // 웹 서버로 보낼 매개변수가 있는 경우우
+                OutputStream os = conn.getOutputStream(); // 서버로 보내기 위한 출력 스트림
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8")); // UTF-8로 전송
+                bw.write(getPostString(map)); // 매개변수 전송
                 bw.flush();
                 bw.close();
                 os.close();
             }
-            if(urlCon.getResponseCode() == HttpURLConnection.HTTP_OK){
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 
-                while((line = br.readLine())!=null)
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) { // 연결에 성공한 경우
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream())); // 서버의 응답을 읽기 위한 입력 스트림
+
+                while ((line = br.readLine()) != null) // 서버의 응답을 읽어옴
                     response += line;
             }
-            urlCon.disconnect();
-        }catch (MalformedURLException me) {
+
+            conn.disconnect();
+        } catch (MalformedURLException me) {
             me.printStackTrace();
-          //  return me.toString();
+           // return me.toString();
         } catch (Exception e) {
             e.printStackTrace();
-          //  return e.toString();
+           // return e.toString();
         }
-      //  return response;
+       // return response;
     }
 
     //매개 변수를 URL에 붙이는 함수
     private String getPostString(HashMap<String, String> map){
         StringBuilder result = new StringBuilder();
-        boolean first = true; // 첫번째 매개변수
+        boolean first = true; // 첫 번째 매개변수 여부
+
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (first)
                 first = false;
@@ -455,8 +459,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                 result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
                 result.append("=");
                 result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-              //  result.append(URLEncoder.encode(String.valueOf(entry.getValue())), "");
-               // result.append(URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8"));
             } catch (UnsupportedEncodingException ue) {
                 ue.printStackTrace();
             } catch (Exception e) {
