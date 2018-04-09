@@ -1,9 +1,11 @@
 package com.example.jekan.fyp_test.activity;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import android.widget.ViewFlipper;
 import com.bumptech.glide.Glide;
 import com.example.jekan.fyp_test.InputDialog;
 import com.example.jekan.fyp_test.R;
+import com.example.jekan.fyp_test.RequestHttpURLConnection;
 import com.example.jekan.fyp_test.RotateTransformation;
 import com.example.jekan.fyp_test.view.CalcSize;
 import com.example.jekan.fyp_test.view.DotPoint;
@@ -67,7 +70,8 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
     static final int REQUEST_SEND_DATA=3;
     static final int REQUEST_DRAW_DOT=4;
 
-    HashMap<String, String> map = new HashMap<>();
+
+    ContentValues map = new ContentValues();
 
     ArrayList<DotPoint> frontDots, sideDots;
     CalcSize calcSize;
@@ -87,12 +91,38 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
         layoutUserSideState = (RelativeLayout)findViewById(R.id.layout_user_side_state);
         layoutUserSideState.setVisibility(View.INVISIBLE);
 
-
-
         viewFlipper = (ViewFlipper)findViewById(R.id.flipper);
-        viewFlipper.setOnTouchListener(this); //얘쓸라면 코드 다 갈아엎어야함 ㅠㅠ
-
+        viewFlipper.setOnTouchListener(this);
         initState();
+    }
+
+    public class NetworkTask extends AsyncTask<Void, Void, String>{
+        private String url;
+        private ContentValues values;
+
+        public NetworkTask(String url, ContentValues values) {
+
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String result; // 요청 결과를 저장할 변수.
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+/*
+            //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
+            tv_outPut.setText(s);*/
+        }
     }
 
     public void initState(){
@@ -205,10 +235,8 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
 
                         if(inputDialog.getEditUerHeight()!=null){
                             float user_height = (float)Float.parseFloat(inputDialog.getEditUerHeight());
-                            //(float)Integer.parseInt(inputDialog.getEditUerHeight());
-                            //치수 값이 잘 나오는지 테스트
                             calcSize = new CalcSize(frontDots, sideDots,user_height);
-                            float pixel = calcSize.clacHeightPixel();
+                          //  float pixel = calcSize.clacHeightPixel();
 
                             float topLength = calcSize.getTopLength(); //상체길이 45
                             float legLength = calcSize.getLegLength(); //하체길이 88
@@ -223,12 +251,12 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                             float neckLength = calcSize.getNeckLength(); //목너비 19
 
                             map.put("id", userId);
-                            map.put("top",String.valueOf(topLength));
+                            map.put("toplength",String.valueOf(topLength));
+                            map.put("bottomlength", String.valueOf(legLength));
                             map.put("shoulder",String.valueOf(shoulderLength));
                             map.put("chest", String.valueOf(chestLength));
                             map.put("armhole",String.valueOf(armHoleLength));
                             map.put("arm", String.valueOf(armLength));
-                            map.put("bottom", String.valueOf(legLength));
                             map.put("waist", String.valueOf(waistLength));
                             map.put("hip", String.valueOf(hipLength));
                             map.put("thigh",String.valueOf(thighLength));
@@ -236,30 +264,22 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                             map.put("height", String.valueOf(user_height));
 
 
+                            //http://www.smartsizeservice.xyz/index.php?action=editinfo
 
-                            /*Toast.makeText(getApplicationContext(), "[사용자 정보]\n상체길이: "+topLength
-                                    +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
-                                    +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
-                                    +"\n밑위길이: "+crotchLength + "\n목너비: " + neckLength,Toast.LENGTH_LONG).show();
-*/
+
+                            NetworkTask networkTask = new NetworkTask("http://www.smartsizeservice.xyz/index.php?action=editinfo", map);
+                            networkTask.execute();
+
                             Log.d("Size","[사용자 정보]\n상체길이: "+topLength
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
                                     +"\n밑위길이: "+crotchLength + "\n목너비: " + neckLength);
 
 
-                           /* Intent intent = new Intent(SetImageActivity.this, MainActivity.class);A
-                            intent.putExtra("actual_height", inputDialog.getEditUerHeight().toString());
-                            intent.putExtra("fPoints", frontDots);
-                            intent.putExtra("sPoints", sideDots);
-                            startActivity(intent);*/
-
-                            new Thread(){
-                                public void run(){
-                                    sendUserSize(map,"http://www.smartsizeservice.xyz/index.php?action=editinfo");
-                                }
-                            }.start();
+                            Intent intent = new Intent(SetImageActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
+
                        // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
                         // startActivityForResult(intent, REQUEST_SEND_DATA);
                     }
@@ -377,9 +397,9 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
             if(xAtDown>xAtUp){ // 우에서 좌 -> 즉 side로 갈 때
                 viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
                 viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
+                isFront = false;
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_white));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_pink));
-                Toast.makeText(getApplicationContext(),"넘김111", Toast.LENGTH_SHORT).show();
                 count++;
                 if(count<2)
                     viewFlipper.showNext();
@@ -389,9 +409,9 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
             else  if(xAtDown<xAtUp){ //좌에서 우 -> 즉 front로 갈 때
                 viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
                 viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
+                isFront = true;
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_pink));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_white));
-                Toast.makeText(getApplicationContext(),"넘김222", Toast.LENGTH_SHORT).show();
                 count--;
                 if(count>-1)
                     viewFlipper.showPrevious();
@@ -401,74 +421,9 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
         }
         return true;
     }
-
-    //사용자의 치수를 웹으로 보내자
-    private void sendUserSize(HashMap<String, String> map, String addr){
-        String response = ""; // DB 서버의 응답을 담는 변수
-
-        try {
-            URL url = new URL(addr);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // 해당 URL에 연결
-
-            conn.setConnectTimeout(10000); // 타임아웃: 10초
-            conn.setUseCaches(false); // 캐시 사용 안 함
-            conn.setRequestMethod("POST"); // POST로 연결
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            if (map != null) { // 웹 서버로 보낼 매개변수가 있는 경우우
-                OutputStream os = conn.getOutputStream(); // 서버로 보내기 위한 출력 스트림
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8")); // UTF-8로 전송
-                bw.write(getPostString(map)); // 매개변수 전송
-                bw.flush();
-                bw.close();
-                os.close();
-            }
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) { // 연결에 성공한 경우
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream())); // 서버의 응답을 읽기 위한 입력 스트림
-
-                while ((line = br.readLine()) != null) // 서버의 응답을 읽어옴
-                    response += line;
-            }
-
-            conn.disconnect();
-        } catch (MalformedURLException me) {
-            me.printStackTrace();
-           // return me.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-           // return e.toString();
-        }
-       // return response;
-    }
-
-    //매개 변수를 URL에 붙이는 함수
-    private String getPostString(HashMap<String, String> map){
-        StringBuilder result = new StringBuilder();
-        boolean first = true; // 첫 번째 매개변수 여부
-
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (first)
-                first = false;
-            else // 첫 번째 매개변수가 아닌 경우엔 앞에 &를 붙임
-                result.append("&");
-
-            try { // UTF-8로 주소에 키와 값을 붙임
-                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            } catch (UnsupportedEncodingException ue) {
-                ue.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result.toString();
-    }
 }
+
+
 
 
 
