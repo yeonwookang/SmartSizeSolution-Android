@@ -34,12 +34,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     // 컴포넌트
     private WebView webview; // 웹뷰
-  /*  public HttpClient httpclient = new DefaultHttpClient(); //멤버 변수로 선언
-    public android.webkit.CookieManager cookieManager;
-    public String sss_domain="http://52.79.137.54";*/ // HttpClient -> HttpURLConnection으로 변경하자
     CookieManager cookieManager;
     private static String userId = null;
-
 
     // 슬라이딩 페이지
     private LinearLayout slidingPage;
@@ -94,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 String cookies = CookieManager.getInstance().getCookie(url);
                 Toast.makeText(getApplicationContext(), "쿠키값-->onPageFinished: "+cookies, Toast.LENGTH_SHORT).show();
 
-                String [] temp = cookies.split(";");
+                String [] temp =  cookies.split(";");
                 for(String arg : temp){
                     if(arg.contains("id")){
                         String[] _arg = arg.split("=");
@@ -174,10 +170,10 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                     layoutUserLogin.setVisibility(View.VISIBLE);
                 }else{
                     // 테스트를 위해 로그인 했다 가정함
-                    //layoutUserLogout.setVisibility(View.VISIBLE);
-                    //layoutUserLogin.setVisibility(View.GONE);
-                    layoutUserLogout.setVisibility(View.GONE);
-                    layoutUserLogin.setVisibility(View.VISIBLE);
+                    layoutUserLogout.setVisibility(View.VISIBLE);
+                    layoutUserLogin.setVisibility(View.GONE);
+                    //layoutUserLogout.setVisibility(View.GONE);
+                    //layoutUserLogin.setVisibility(View.VISIBLE);
                 }
 
                 if (isSlidingPageOpen) {// 열려 있으면
@@ -315,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     }
 
     public boolean isUserLogin(){
-        if(getUserId()==null || getUserId().equals("null"))
+        if(getUserId() == null || getUserId().equals("null"))
             return false;
         else
             return true;
@@ -328,60 +324,5 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     public String getUserId(){
         return userId;
     }
-
-/*
-    public void setSyncCookie() {
-        Log.e("surosuro", "token transfer start ---------------------------");
-        try {
-            List<NameValuePair> nameValuePairs = new ArrayList<>(2);
-            nameValuePairs.add(new BasicNameValuePair("token", "TEST"));// 넘길 파라메터 값셋팅token=TEST
-            HttpParams params = new BasicHttpParams();
-            HttpPost post = new HttpPost(sss_domain);
-            post.setParams(params);
-            HttpResponse response = null;
-            BasicResponseHandler myHandler = new BasicResponseHandler();
-            String endResult = null;
-
-            try {
-                post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                response = httpclient.execute(post);
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                endResult = myHandler.handleResponse(response);
-            } catch (HttpResponseException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            List<Cookie> cookies = ((DefaultHttpClient)httpclient).getCookieStore().getCookies();
-            String cookieString="null";
-
-            if (!cookies.isEmpty()) {
-                for (int i = 0; i < cookies.size(); i++) {
-                    // cookie = cookies.get(i);
-                     cookieString = cookies.get(i).getName() + "="
-                            + cookies.get(i).getValue();
-                    Log.e("넌 뭐나오니 여기서", cookieString);
-                    cookieManager.setCookie(sss_domain, cookieString);
-                }
-            }else{
-                Log.e("넌 뭐나오니 여기서2222", cookieString);
-            }
-            Thread.sleep(500);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }*/
 
 }

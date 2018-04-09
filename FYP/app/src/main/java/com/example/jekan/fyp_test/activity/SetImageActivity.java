@@ -66,13 +66,10 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
     private String userId;
 
     static final int REQUEST_PICK_FROM_ALBUM = 0;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final int REQUEST_SEND_DATA=3;
     static final int REQUEST_DRAW_DOT=4;
 
 
     ContentValues map = new ContentValues();
-
     ArrayList<DotPoint> frontDots, sideDots;
     CalcSize calcSize;
 
@@ -219,7 +216,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), CameraActivity.class);
                 startActivity(intent);
-                // startActivityForResult(intent, REQUEST_TAKE_PHOTO);
             }
         });
 
@@ -236,7 +232,7 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                         if(inputDialog.getEditUerHeight()!=null){
                             float user_height = (float)Float.parseFloat(inputDialog.getEditUerHeight());
                             calcSize = new CalcSize(frontDots, sideDots,user_height);
-                          //  float pixel = calcSize.clacHeightPixel();
+                            float pixel = calcSize.clacHeightPixel();
 
                             float topLength = calcSize.getTopLength(); //상체길이 45
                             float legLength = calcSize.getLegLength(); //하체길이 88
@@ -264,9 +260,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                             map.put("height", String.valueOf(user_height));
 
 
-                            //http://www.smartsizeservice.xyz/index.php?action=editinfo
-
-
                             NetworkTask networkTask = new NetworkTask("http://www.smartsizeservice.xyz/index.php?action=editinfo", map);
                             networkTask.execute();
 
@@ -274,14 +267,11 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                                     +"\n하체길이: "+legLength+"\n어깨너비:"+shoulderLength+"\n가슴너비: "+chestLength+"\n허리너비: "+waistLength
                                     +"\n허벅지너비: "+thighLength+"\n엉덩이너비: "+hipLength+"\n팔길이: "+armLength+"\n암홀너비:"+armHoleLength
                                     +"\n밑위길이: "+crotchLength + "\n목너비: " + neckLength);
-
-
-                            Intent intent = new Intent(SetImageActivity.this, MainActivity.class);
-                            startActivity(intent);
                         }
 
-                       // Intent intent = new Intent(SetImageActivity.this, MainActivity.class); //나중에 데이터 추가해야함
-                        // startActivityForResult(intent, REQUEST_SEND_DATA);
+                        finish();
+                        /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);*/
                     }
                 });
                 inputDialog.setCancelable(false);
@@ -318,7 +308,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
             case REQUEST_DRAW_DOT:
                 if(resultCode == RESULT_OK){
                     Boolean state = data.getExtras().getBoolean("isFront");
-
                     if(state){
                         Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
                         frontDots = (ArrayList<DotPoint>) data.getSerializableExtra("dotPosition");
@@ -335,8 +324,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                     if(frontDots!=null && sideDots!=null){ //둘다 값이 있어야만 save버튼이 보이도록
                         btnSavePicture.setVisibility(View.VISIBLE);
                     }
-
-
                 }
                   break;
         }
@@ -355,7 +342,6 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
     }
 
     public void setPictureToImageView(String photoPath){
-
         if(photoPath!=null && photoPath.length()>0){
             if(isFront){
                 photoPathArr[0] = photoPath;
@@ -370,11 +356,8 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                 btnRotateImage.setVisibility(View.VISIBLE);
                 btnDrawDot.setVisibility(View.VISIBLE);
             }
-
         }
-
     }
-
 
     public void userImageRotate(String photoPath, float rotate){
         if(isFront){
