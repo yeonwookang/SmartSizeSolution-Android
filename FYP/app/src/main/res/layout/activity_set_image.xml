@@ -14,6 +14,12 @@
         android:layout_below="@id/view_user_state"
         android:layout_above="@id/layout_menu">
 
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/flipper"
+            android:flipInterval="1000">
+        <!--정면일 때-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,6 +45,7 @@
 
         </RelativeLayout>
 
+        <!--측면일 때-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,8 +54,7 @@
             <ImageView
                 android:id="@+id/img_user_side"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible"/>
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/txt_side_default"
@@ -61,10 +67,10 @@
                 android:text="SELECT YOUR SIDE IMAGE"
                 android:textColor="#7272BA"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                android:visibility="invisible"/>
-
+                android:textStyle="bold"/>
         </RelativeLayout>
+
+        </ViewFlipper>
 
     </RelativeLayout>
 

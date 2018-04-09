@@ -83,12 +83,14 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
         txt_side_default.setTypeface(typeface);
         userId = getIntent().getExtras().getString("user_id");
 
-/*
-        viewFlipper = (ViewFlipper)findViewById(R.id.flipper);
-        viewFlipper.setOnTouchListener(this); //얘쓸라면 코드 다 갈아엎어야함 ㅠㅠ
         layoutUserFrontState = (RelativeLayout)findViewById(R.id.layout_user_front_state);
         layoutUserSideState = (RelativeLayout)findViewById(R.id.layout_user_side_state);
-*/
+        layoutUserSideState.setVisibility(View.INVISIBLE);
+
+
+
+        viewFlipper = (ViewFlipper)findViewById(R.id.flipper);
+        viewFlipper.setOnTouchListener(this); //얘쓸라면 코드 다 갈아엎어야함 ㅠㅠ
 
         initState();
     }
@@ -102,17 +104,14 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                 isFront=true;
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_pink));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_white));
+                layoutUserFrontState.setVisibility(View.VISIBLE);
+                layoutUserSideState.setVisibility(View.INVISIBLE);
+
                 if(photoPathArr[0]==null)
                     txt_front_default.setVisibility(View.VISIBLE);
                 else
                     txt_front_default.setVisibility(View.INVISIBLE);
 
-
-                imgUserFront.setVisibility(View.VISIBLE);
-                // layoutUserSideState.setVisibility(View.INVISIBLE);
-
-                imgUserSide.setVisibility(View.INVISIBLE);
-                txt_side_default.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -123,18 +122,13 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                 isFront=false;
                 btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_white));
                 btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_pink));
+                layoutUserFrontState.setVisibility(View.INVISIBLE);
+                layoutUserSideState.setVisibility(View.VISIBLE);
 
-                if(photoPathArr[1]==null)
+                if(photoPathArr[1] == null)
                     txt_side_default.setVisibility(View.VISIBLE);
                 else
                     txt_side_default.setVisibility(View.INVISIBLE);
-
-                imgUserSide.setVisibility(View.VISIBLE);
-
-                imgUserFront.setVisibility(View.INVISIBLE);
-                txt_front_default.setVisibility(View.INVISIBLE);
-
-
             }
         });
 
@@ -373,24 +367,30 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-       /* if(v != viewFlipper) return false;
+        if(v != viewFlipper) return false;
 
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             xAtDown = event.getX();
         }else if(event.getAction() == MotionEvent.ACTION_UP){
             xAtUp = event.getX();
-            if(xAtDown>xAtUp){ //좌에서 우로 클릭
+            if(xAtDown>xAtUp){ // 우에서 좌 -> 즉 side로 갈 때
                 viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
                 viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
+                btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_white));
+                btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_pink));
+                Toast.makeText(getApplicationContext(),"넘김111", Toast.LENGTH_SHORT).show();
                 count++;
-                if(count<3)
+                if(count<2)
                     viewFlipper.showNext();
                 else
                     count--;
             }
-            else  if(xAtDown<xAtUp){ //우에서 좌로
+            else  if(xAtDown<xAtUp){ //좌에서 우 -> 즉 front로 갈 때
                 viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_in));
                 viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_right_out));
+                btnFront.setBackground(getResources().getDrawable(R.drawable.btn_front_pink));
+                btnSide.setBackground(getResources().getDrawable(R.drawable.btn_side_white));
+                Toast.makeText(getApplicationContext(),"넘김222", Toast.LENGTH_SHORT).show();
                 count--;
                 if(count>-1)
                     viewFlipper.showPrevious();
@@ -398,8 +398,7 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                     count++;
             }
         }
-        return false;*/
-       return true;
+        return true;
     }
 
     //사용자의 치수를 웹으로 보내자
