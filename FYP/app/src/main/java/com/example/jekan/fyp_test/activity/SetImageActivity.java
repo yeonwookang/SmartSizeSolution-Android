@@ -174,7 +174,7 @@ public class SetImageActivity extends AppCompatActivity implements  View.OnTouch
                     rotate = rotateArr[1];
                 }
 
-                
+
                 intent.putExtra("path", photoPath); // 이미지 경로 전달
                 intent.putExtra("isFront", isFront); // 사진 방향 정보 넘김
                 intent.putExtra("rotate", rotate);
