@@ -18,10 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.jekan.fyp_test.R;
-import com.example.jekan.fyp_test.view.CalcSize;
-import com.example.jekan.fyp_test.view.DotPoint;
-
-import java.util.ArrayList;
 
 /**
  * Created by jekan on 2018-02-20.
@@ -226,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 break;
             case R.id.btn_menu_down:
                 slidingPage.startAnimation(translateDownAnim);
+                layoutfadeBg.startAnimation(fadeOutAnim);
                 break;
             case R.id.beforeBtn:
                 if(webview.canGoBack()) // 뒤로 가기가 가능한 경우에만
