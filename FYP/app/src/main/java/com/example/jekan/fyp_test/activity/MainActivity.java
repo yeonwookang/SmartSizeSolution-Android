@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
                 if (isSlidingPageOpen) {// 열려 있으면
                     slidingPage.startAnimation(translateDownAnim); //아래쪽으로 애니메이션
-                    layoutfadeBg.startAnimation(fadeOutAnim); // 나타남
+                    layoutfadeBg.startAnimation(fadeOutAnim); // 사라짐
                 } else { // 닫혀 있으면
                     slidingPage.setVisibility(View.VISIBLE); // 보이도록 한 후
                     layoutfadeBg.setVisibility(View.VISIBLE);
@@ -202,8 +202,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     }
 
     public void setDownSlidingPage(){
-        slidingPage.setVisibility(View.INVISIBLE);
-        isSlidingPageOpen = false;
+        slidingPage.startAnimation(translateDownAnim);
+        layoutfadeBg.startAnimation(fadeOutAnim);
     }
 
     @Override
@@ -221,20 +221,21 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 setDownSlidingPage();
                 break;
             case R.id.btn_menu_down:
-                slidingPage.startAnimation(translateDownAnim);
-                layoutfadeBg.startAnimation(fadeOutAnim);
+                setDownSlidingPage();
                 break;
             case R.id.beforeBtn:
                 if(webview.canGoBack()) // 뒤로 가기가 가능한 경우에만
                     webview.goBack();
+
                 break;
             case R.id.nextBtn:
                 if(webview.canGoForward()) //앞으로 가기가 가능한 경우에만
                     webview.goForward();
+
                 break;
             case R.id.homeBtn:
                 webview.loadUrl("http://www.smartsizeservice.xyz/index.php?action=main"); // 시작 페이지
-                setDownSlidingPage();
+
                 break;
             case R.id.refreshBtn:
                 String currentUrl = webview.getUrl();
