@@ -80,12 +80,11 @@
     <RelativeLayout
         android:id="@+id/view_user_state"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="62dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#455975"
-        >
+        android:background="@drawable/img_upperbar">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -121,9 +120,9 @@
 
 
     <RelativeLayout
-        android:background="#32435B"
+        android:background="@drawable/img_underbar"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:id="@+id/layout_menu">
@@ -142,7 +141,7 @@
         <Button
             android:layout_margin="15dp"
             android:background="@drawable/btn_camera"
-            android:layout_width="49dp"
+            android:layout_width="48dp"
             android:layout_height="32dp"
             android:id="@+id/btn_take_picture_set_Image"/>
 
@@ -158,8 +157,8 @@
         <Button
             android:layout_margin="15dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_album"
-            android:layout_width="49dp"
+            android:background="@drawable/btn_elbum"
+            android:layout_width="48dp"
             android:layout_height="32dp"
             android:id="@+id/btn_gallery_set_Image"/>
 
@@ -173,8 +172,8 @@
 
         <Button
             android:layout_margin="15dp"
-            android:background="@drawable/btn_save"
-            android:layout_width="49dp"
+            android:background="@drawable/btn_sace"
+            android:layout_width="48dp"
             android:layout_height="32dp"
             android:id="@+id/btn_save_set_Image"
             android:visibility="invisible"/>
@@ -189,10 +188,10 @@
 
             <Button
                 android:id="@+id/btn_rotate_set_Image"
-                android:layout_width="49dp"
+                android:layout_width="48dp"
                 android:layout_height="32dp"
                 android:layout_margin="15dp"
-                android:background="@drawable/btn_revise"
+                android:background="@drawable/btn_refresh"
                 android:visibility="invisible" />
 
         </LinearLayout>
@@ -205,8 +204,8 @@
 
         <Button
             android:layout_margin="15dp"
-            android:background="@drawable/btn_pen"
-            android:layout_width="49dp"
+            android:background="@drawable/btn_edit"
+            android:layout_width="48dp"
             android:layout_height="32dp"
             android:id="@+id/btn_draw_set_Image"
             android:visibility="invisible"/>

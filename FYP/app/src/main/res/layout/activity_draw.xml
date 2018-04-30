@@ -11,7 +11,7 @@
         android:layout_width="12dp"
         android:layout_height="22dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/btn_help"
+        android:background="@drawable/btn"
         android:textOn=""
         android:textOff=""/>
 
@@ -26,7 +26,7 @@
         android:layout_below="@id/btn_user_help"/>
 
     <Button
-        android:background="@drawable/btn_set_save"
+        android:background="@drawable/btn_save"
         android:id="@+id/btn_save_draw"
         android:layout_width="53dp"
         android:layout_height="25dp"

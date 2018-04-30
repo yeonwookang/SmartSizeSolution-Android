@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                         Toast.makeText(getApplicationContext(), getUserId()+"-->onPageFinished getId", Toast.LENGTH_SHORT).show();
                     }else{
                         setUserId("null");
-                        Toast.makeText(getApplicationContext(), getUserId()+"-->onPageFinished getId", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), getUserId()+"-->onPageFinished getId", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         setSlidingPage();
     }
 
-    private String getParameter(String url, String key){
+    /*private String getParameter(String url, String key){
 
         UrlQuerySanitizer san = new UrlQuerySanitizer(url);
         String value = null;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         }
 
         return value;
-    }
+    }*/
 
 
     // ETC 버튼 설정 함수
