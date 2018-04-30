@@ -29,13 +29,13 @@
         android:layout_height="360dp"
         android:background="#eaeaea"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"><!--gone-->
 
         <LinearLayout
             android:id="@+id/layout_select_menu"
             android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:background="#455975"
+            android:background="@drawable/img_sildebar"
             android:gravity="right"
             android:elevation="3dp">
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
         <Button
             android:id="@+id/signInBtn"
             android:background="@drawable/btn_login"
@@ -85,25 +85,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:id="@+id/btn_logout"
-            android:background="@drawable/btn_log_out"/>
+            android:background="@drawable/btn_logout"/>
         <!--//마이페이지-->
         <Button
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:id="@+id/btn_my_page"
-            android:background="@drawable/btn_my_page"/>
+            android:background="@drawable/btn_mypage"/>
         <!--//오토사이즈-->
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/autoSizeBtn"
-            android:background="@drawable/btn_auto_size"/>
+            android:background="@drawable/btn_auto"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cartBtn"
+            android:background="@drawable/btn_cart"/>
 
     </LinearLayout>
         <!--//카트// 로그인 안했을 때 버튼이랑 공통-->
