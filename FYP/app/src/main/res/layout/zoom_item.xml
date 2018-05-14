@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_seek">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+        <com.example.jekan.fyp_test.view.Dot
+            android:id="@+id/dot"
+            android:tag="trueDot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.example.jekan.fyp_test.view.Dot>
+
+    </RelativeLayout>
+
+</LinearLayout>

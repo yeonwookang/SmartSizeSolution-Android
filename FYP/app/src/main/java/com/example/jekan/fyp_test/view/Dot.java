@@ -30,7 +30,7 @@ public class Dot extends View{
     private CalcSize calcSize;
 
     // 드래그 플래그
-    private boolean isDrag = false;
+    public static boolean isDrag = false;
 
     // 선택된 좌표점 인덱스
     private int index = 0; // 초기값 0

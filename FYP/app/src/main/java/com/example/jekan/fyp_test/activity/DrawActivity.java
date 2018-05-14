@@ -1,13 +1,18 @@
 package com.example.jekan.fyp_test.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 
@@ -19,9 +24,12 @@ import com.example.jekan.fyp_test.view.DotPoint;
 
 import java.util.ArrayList;
 
+import pl.polidea.view.ZoomView;
+
 /**
  * Created by jekan on 2018-02-20.
  */
+
 
 public class DrawActivity extends Activity{
     // 점 최대, 최소 크기
@@ -36,6 +44,20 @@ public class DrawActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
+
+        View v = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.zoom_item, null, false);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        ZoomView zoomView = new ZoomView(this);
+        zoomView.addView(v);
+        zoomView.setLayoutParams(layoutParams);
+        zoomView.setMiniMapEnabled(true); // 좌측 상단 검은색 미니맵 설정
+        zoomView.setMaxZoom(4f); // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
+        zoomView.setMiniMapCaption("화면 배율"); //미니 맵 내용
+        zoomView.setMiniMapCaptionSize(20); // 미니 맵 내용 글씨 크기 설정
+        RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
+        container.addView(zoomView);
+
         helpBtn = (ToggleButton)findViewById(R.id.btn_user_help);
 
         helpBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
