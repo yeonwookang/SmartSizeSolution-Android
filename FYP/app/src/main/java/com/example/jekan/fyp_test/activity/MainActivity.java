@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_logout:
+                webview.loadUrl("http://www.smartsizeservice.xyz/index.php?action=logout");
                 setDownSlidingPage();
                 break;
             case R.id.btn_my_page:
